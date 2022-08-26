@@ -1,0 +1,45 @@
+palettes:
+  - name: global_palette
+    fixed-entries:
+      - color: {index: 0, r: 255, g: 0, b: 128}
+      - color: {index: 1, r: 255, g: 0, b: 0}
+      - color: {index: 2, r: 0, g: 0, b: 255}
+      - color: {index: 3, r: 255, g: 255, b: 0}
+      - color: {index: 4, r: 0, g: 255, b: 0}
+    images: automatic
+
+converts:
+  - name: tetris
+    palette: global_palette
+    transparent-color-index: 0
+    compress: zx0
+    width-and-height: true
+    images:
+      - tetrisidleright1.png
+      - tetrisidleleft1.png
+      - tetrisshield1.png
+      - tetrisdodgeright1.png
+      - tetrisdodgeleft1.png
+      - tetrisattackneutralleft1.png
+      - tetrisattackneutralright1.png
+      - tetrisattacksmashcharge1.png
+      - tetrisattacksmash1.png
+      - tetrisattackspecial1.png
+      - tetrisattackrecovery1.png
+      - tetrisattackrecovery2.png
+  - name: finalDes
+    palette: global_palette
+    transparent-color-index: 0
+    compress: zx0
+    width-and-height: true
+    images:
+      - finalDes.png
+
+outputs:
+  - type: c
+    include-file: gfx.h
+    palettes:
+      - global_palette
+    converts:
+      - tetris
+      - finalDes
