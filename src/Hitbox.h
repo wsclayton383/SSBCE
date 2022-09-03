@@ -5,13 +5,12 @@ enum { normal, none, flinching, grab };
 
 struct Hitbox
 {
-	float xpos, ypos;
+	float x1, y1, x2, y2;
 	float knockback;
-	int knockbackType;
+	int knockbackType = normal;
 	bool setKnockback;
 	float xangle, yangle;
 	float damage;
-	bool isCircle;
-	float sizeR, sizeX, sizeY;
+	int team;
 	char* name;
 };

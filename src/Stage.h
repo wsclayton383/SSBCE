@@ -11,6 +11,7 @@ struct Stage
 {
 	int id;
 	vector<Solid> solids;
+	vector<Hitbox> hboxes;
 	int bgColor;
 
 	void render()
