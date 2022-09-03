@@ -1,24 +1,39 @@
 Super Smash Bros. CE
-Beta v0.1
+Beta v0.2
 By theflamingninja21
 TI-84+ CE
 
 More of a proof of concept than an actual beta, but I figured I should announce this project before I go any further.
 
+
 Controls:
+P1
+(P2)
 
-Arrow keys: Move, direct attacks, etc.
+Arrow keys:		Move, direct attacks, etc.
+(4, 5, 6, 8)
 
-2nd: Neutral attack. Press down just before 2nd to down smash.
+2nd:			Neutral attack. Press down just before 2nd to down smash.
+(^)
 
-Alpha: Special attack, which can be cancelled by pressing alpha again. Press while holding up to recover.
+Alpha:		Special attack, which can be cancelled by pressing alpha again. Press 				while holding up to recover.
+(/)
 
-Mode: Jump. I chose not to use up for jump to make up attacks easier to use.
+Mode:			Jump. I chose not to use up for jump to make up attacks easier to use.
+(tan)
 
-XT0n: Shield and dodge. Hold to long and your shield will break, and you'll be unable to move until it regenerates.
+XT0n:			Shield and dodge. Hold to long and your shield will break, and you'll be 			unable to move until it regenerates.
+())
+
 
 Clear: Exit.
 
-y=/window (debug): Enables/disables fps and frameskip display.
+y=/window (debug): Enables/disables fps and frameskip display, and shows hitboxes.
 
-+,- (debug): Add,subtract damage.
++,- (debug):	Add,subtract damage.
+
+
+Changelog:
+
+Beta v0.1		Initial release
+Beta v0.2		Added 2nd player. Debug now shows hitboxes.
