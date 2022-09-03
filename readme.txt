@@ -3,7 +3,7 @@ Beta v0.2
 By theflamingninja21
 TI-84+ CE
 
-More of a proof of concept than an actual beta, but I figured I should announce this project before I go any further.
+I added a second character, so attacks finally do something. This pretty much cuts the framerate in half, so v0.3 will be focused on optimization.
 
 
 Controls:
