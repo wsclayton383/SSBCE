@@ -1,16 +1,18 @@
 Super Smash Bros. CE
-Beta v0.2
+Beta v0.3
 By theflamingninja21
 TI-84+ CE
 
-I added a second character, so attacks finally do something. This pretty much cuts the framerate in half, so v0.3 will be focused on optimization.
+I added stocks to the damage GUI, as well as the announcer countdown and "Game!".
+Platforms have been added to the test stage.
+Bug fixes, optimization, etc.
 
 
 Controls:
 P1
 (P2)
 
-Arrow keys:		Move, direct attacks, etc.
+Arrow keys:		Move, direct attacks, etc. Double-tap down to fall through platforms.
 (4, 5, 6, 8)
 
 2nd:			Neutral attack. Press down just before 2nd to down smash.
@@ -37,3 +39,4 @@ Changelog:
 
 Beta v0.1		Initial release
 Beta v0.2		Added 2nd player. Debug now shows hitboxes.
+Beta v0.3		Added platforms, stocks, and countdown.
