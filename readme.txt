@@ -18,13 +18,13 @@ Arrow keys:		Move, direct attacks, etc. Double-tap down to fall through platform
 2nd:			Neutral attack. Press down just before 2nd to down smash.
 (^)
 
-Alpha:		Special attack, which can be cancelled by pressing alpha again. Press 				while holding up to recover.
+Alpha:		Special attack, which can be cancelled by pressing alpha again. Press while holding up to recover.
 (/)
 
 Mode:			Jump. I chose not to use up for jump to make up attacks easier to use.
 (tan)
 
-XT0n:			Shield and dodge. Hold to long and your shield will break, and you'll be 			unable to move until it regenerates.
+XT0n:			Shield and dodge. Hold to long and your shield will break, and you'll be unable to move until it regenerates.
 ())
 
 
