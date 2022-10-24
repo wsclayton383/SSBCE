@@ -19,7 +19,7 @@ struct Stage
 		gfx_FillScreen(bgColor);
 		for (int i = 0; i < (int)solids.size(); i++)
 		{
-			if (solids[i].anim.frames.size())
+			//if (solids[i].anim.frames.size())
 				solids[i].render();
 		}
 	}

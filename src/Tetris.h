@@ -5,20 +5,25 @@ struct Tetris : public Player
 {
 	void update(bool keyA, bool keyB, bool keyG, bool keyJ, bool keyS, bool keyDown, bool keyLeft, bool keyRight, bool keyUp)
 	{
-		Hitbox temp;
 		h = temp;
 		hboxes.clear();
-		if (intangible)
-			intangible = !(keyA || keyB || keyG || keyJ || keyS || keyDown || keyLeft || keyRight || keyUp);
+		intangible *= !(keyA || keyB || keyG || keyJ || keyS || keyDown || keyLeft || keyRight || keyUp);
 		switch (state)
 		{
 		default:
 		case idle:
+			currentAnim = facingLeft + 4 * intangible;
 			if (lagTimer > 0)
 				lagTimer--;
 			else
 			{
 				xvel += (2 + !airborne) * (keyRight - keyLeft);
+				if (keyDown && onSemi && (yvel >= 10 || (releasedTime[5] <= 30 && !heldTime[5])))
+				{
+					ypos += 3;
+					if (yvel < 10)
+						yvel = 10;
+				}
 				if (keyJ && releasedTime[3] && (!airborne || jumps > 0))
 				{
 					yvel = -20;
@@ -95,6 +100,7 @@ struct Tetris : public Player
 			}
 			break;
 		case shield:
+			currentAnim = 2;
 			if (keyS)
 			{
 				if (shieldDamage < 600)
@@ -142,8 +148,9 @@ struct Tetris : public Player
 			}
 			break;
 		case dodge:
-			xvel = 14 * facingLeft - 7;
+			xvel = 28 * facingLeft - 14;
 		case spotdodge:
+			currentAnim = 4 + facingLeft;
 			moveTimer--;
 			if (moveTimer <= 0)
 			{
@@ -153,7 +160,8 @@ struct Tetris : public Player
 			}
 			break;
 		case airdodge:
-			xvel = 6 * (keyRight - keyLeft);
+			currentAnim = 4 + facingLeft;
+			xvel = 14 * (keyRight - keyLeft);
 			yvel = 14 * (keyDown - keyUp);
 			moveTimer--;
 			if (moveTimer <= 0)
@@ -171,6 +179,7 @@ struct Tetris : public Player
 			}
 			break;
 		case freefall:
+			currentAnim = 4 + facingLeft;
 			xvel += 2 * (keyRight - keyLeft);
 			if (!airborne)
 			{
@@ -270,8 +279,9 @@ struct Tetris : public Player
 		yvel++;
 		airborne = true;
 
-		if (!gfx_CheckRectangleHotspot(xpos, ypos, hboxx - 1, hboxy - 1, 0, 0, 320, 240))
+		if (!gfx_CheckRectangleHotspot(xpos, ypos, hboxx - 1, hboxy - 1, 0, 0, 319, 239) || damage > 9999)
 		{
+			stocks--;
 			xpos = 107;
 			ypos = 75;
 			xvel = 0;
@@ -284,16 +294,13 @@ struct Tetris : public Player
 			facingLeft = false;
 			intangible = true;
 		}
-		if (damage > 9999)
-			damage = 9999;
-		if (damage < 0)
-			damage = 0;
+		damage *= damage > 0;
 
 		knockbackMultiplier = 1 + damage / 200.0;
 
 		currentFrame++;
 
-		bool keys[9] = { keyA, keyB, keyG, keyJ, keyS, keyDown, keyLeft, keyRight, keyUp };
+		bool keys[9] = {keyA, keyB, keyG, keyJ, keyS, keyDown, keyLeft, keyRight, keyUp};
 		for (int i = 0; i < 9; i++)
 		{
 			releasedTime[i]++;

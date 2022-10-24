@@ -11,12 +11,16 @@ struct Solid
 
 	void render()
 	{
-		//gfx_FillRectangle(xpos, ypos, hboxx, hboxy);
+		if (semiSolid)
+			gfx_SetColor(17);
+		else
+			gfx_SetColor(34);
+		gfx_FillRectangle(xpos, ypos, hboxx, hboxy);
 
-		gfx_TransparentSprite(anim.frames[currentFrame / anim.ticksPerFrame], xpos, ypos);
+		/*gfx_TransparentSprite(anim.frames[currentFrame / anim.ticksPerFrame], xpos, ypos);
 		currentFrame++;
 		if (currentFrame >= (int)anim.frames.size())
-			currentFrame = 0;
+			currentFrame = 0;*/
 	}
 
 	Solid(float x, float y, float hx, float hy, bool sS = false)

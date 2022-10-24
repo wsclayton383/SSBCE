@@ -22,6 +22,7 @@ struct Player
 	int team;
 	float xpos, ypos, xvel, yvel;
 	float hboxx, hboxy;
+	int stocks = 3;
 	int damage = 0;
 	float shieldDamage = 0;
 	float knockbackMultiplier = 1;
@@ -29,6 +30,7 @@ struct Player
 	int lagTimer = 0;
 	bool facingLeft = false;
 	bool airborne;
+	bool onSemi;
 	bool intangible = false;
 	int jumps, maxJumps = 2;
 	int releasedTime[9] = { 120, 120, 120, 120, 120, 120, 120, 120, 120 };
@@ -37,9 +39,11 @@ struct Player
 	int currentFrame = 0;
 	int currentAnim = 0;
 	char* name;
+	gfx_sprite_t* blast;
 	vector<Animation> anims;
 	vector<Projectile> projs;
 	Hitbox h;
+	Hitbox temp;
 	vector<Hitbox> hboxes;
 
 	void loadSprites() {};
@@ -76,13 +80,15 @@ struct Player
 		{
 			if (gfx_CheckRectangleHotspot(xpos, ypos, hboxx - 1, hboxy - 1, s.solids[i].xpos, s.solids[i].ypos, s.solids[i].hboxx, s.solids[i].hboxy))
 			{
+				onSemi = false;
 				if (s.solids[i].semiSolid)
 				{
 					if (ypos <= s.solids[i].ypos && ypos + hboxy <= s.solids[i].ypos + s.solids[i].hboxy && yvel > 0)
 					{
 						ypos -= (yvel - 1) / 7;
-						yvel--;
+						yvel = 0;
 						airborne = false;
+						onSemi = true;
 						jumps = maxJumps;
 					}
 				}
@@ -90,12 +96,12 @@ struct Player
 				{
 					if (xpos <= s.solids[i].xpos && xvel > 0)
 					{
-						xpos -= 1 + xvel / 7;
+						xpos -= (xvel + 1) / 7;
 						xvel = 0;
 					}
 					if (xpos + hboxx > s.solids[i].xpos + s.solids[i].hboxx && xvel < 0)
 					{
-						xpos -= -1 + xvel / 7;
+						xpos -= (xvel - 1) / 7;
 						xvel = 0;
 					}
 					if (ypos <= s.solids[i].ypos && yvel > 0)
@@ -117,38 +123,27 @@ struct Player
 
 	void render()
 	{
-		gfx_TransparentSprite(anims[0].frames[0], 64 * team + 6, 212 - hboxy / 2);
-		gfx_SetTextXY(64 * team, 215);
+		//gfx_TransparentSprite(anims[0].frames[0], 64 * team + 6, 212 - hboxy / 2);
+		gfx_SetTextXY(72 * team - 40, 215);
 		gfx_SetTextBGColor(team);
 		gfx_PrintInt(damage / 10, 1);
 		gfx_PrintChar('.');
 		gfx_PrintInt((damage % 10), 1);
 		gfx_PrintChar('%');
+		gfx_SetTextXY(72 * team - 32, 224);
+		gfx_PrintInt(stocks, 1);
 
-		switch (state)
+		currentFrame *= (currentFrame < anims[currentAnim].ticksPerFrame * (int)anims[currentAnim].frames.size());
+		gfx_TransparentSprite(anims[currentAnim].frames[currentFrame / anims[currentAnim].ticksPerFrame], xpos + anims[currentAnim].xOffset, ypos + anims[currentAnim].yOffset);
+		if (state == shield)
 		{
-		case idle:
-			currentAnim = facingLeft + 4 * intangible;
-			break;
-		case shield:
-			currentAnim = 2;
-			currentFrame *= (currentFrame < anims[currentAnim].ticksPerFrame* (int)anims[currentAnim].frames.size());
-			gfx_TransparentSprite(anims[2].frames[currentFrame / anims[2].ticksPerFrame], xpos + anims[2].xOffset, ypos + anims[2].yOffset);
 			gfx_SetColor(team);
-			gfx_FillCircle(xpos + hboxx / 2 - anims[2].xOffset, ypos + hboxy / 2, 5 - shieldDamage / 60 + (hboxx - anims[2].xOffset) / 2);
-			break;
-		case dodge:
-			currentAnim = 4 + facingLeft;
-			break;
-		case spotdodge:
-		case airdodge:
-		case freefall:
-			currentAnim = 4 + facingLeft;
-			break;
+			gfx_FillCircle_NoClip(xpos + hboxx / 2 - anims[2].xOffset, ypos + hboxy / 2, 5 - shieldDamage / 60 + (hboxx - anims[2].xOffset) / 2);
 		}
-		currentFrame *= (currentFrame < anims[currentAnim].ticksPerFrame* (int)anims[currentAnim].frames.size());
-		if (state != shield)
-			gfx_TransparentSprite(anims[currentAnim].frames[currentFrame / anims[currentAnim].ticksPerFrame], xpos + anims[currentAnim].xOffset, ypos + anims[currentAnim].yOffset);
 
+		for (int i = 0; i < (int)projs.size(); i++)
+		{
+			//projs[i].render();
+		}
 	}
 };

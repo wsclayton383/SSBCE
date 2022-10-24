@@ -33,9 +33,13 @@ int main()
     gfx_SetTransparentColor(0);
     gfx_SetColor(100);
 
-    s.bgColor = 51;
+    s.bgColor = 93;
     s.solids.push_back(Solid(80, 135, 160, 26));
-    s.solids.push_back(Solid(100, 162, 140, 26));
+    s.solids.push_back(Solid(100, 161, 120, 26));
+    s.solids.push_back(Solid(100, 104, 40, 5, true));
+    s.solids.push_back(Solid(140, 73, 40, 5, true));
+    s.solids.push_back(Solid(180, 104, 40, 5, true));
+
     gfx_sprite_t* finalDes;
     finalDes = gfx_MallocSprite(200, 100);
     zx0_Decompress(finalDes, finalDes_compressed);
@@ -53,6 +57,21 @@ int main()
     p2.xpos = 213;
     p2.ypos = 100;
     p2.team = 2;
+
+    gfx_SetTextFGColor(32);
+    gfx_SetTextBGColor(255);
+    for (int i = 3; i > 0; i--)
+    {
+        s.render();
+        gfx_SetTextXY(156, 116);
+        gfx_PrintInt(i, 1);
+        gfx_SwapDraw();
+        delay(1000);
+    }
+    s.render();
+    gfx_PrintStringXY("Fight!", 138, 116);
+    gfx_SwapDraw();
+    delay(1000);
 
     int frame = 0;
     int frameSkip = 3;
@@ -100,6 +119,7 @@ int main()
                     gfx_PrintInt(fps, 1);
                     gfx_SetTextXY(10, 20);
                     gfx_PrintInt(frameSkip, 1);
+                    gfx_SetTextXY(10, 30);
                     gfx_SetColor(32);
                     for (int i = 0; i < (int)s.hboxes.size(); i++)
                     {
@@ -111,7 +131,18 @@ int main()
             else
                 frame = 0;
         }
-    } while (!(kb_Data[6] & kb_Clear));
+    } while (!(kb_Data[6] & kb_Clear) && p1.stocks && p2.stocks);
+
+    if (!p1.stocks || !p2.stocks)
+    {
+        gfx_SetTextFGColor(32);
+        gfx_SetTextBGColor(255);
+        s.render();
+        gfx_PrintStringXY("Game!", 142, 116);
+        gfx_SwapDraw();
+        delay(1000);
+    }
+
     gfx_End();
     
     return 0;
