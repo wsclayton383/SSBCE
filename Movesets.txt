@@ -1,0 +1,71 @@
+Tetronimo:
+	Neutral: Horizontal L/J. Hitbox is the two squares farthest from the center.
+	Smash: Down Charge as vertical I, release as upsidedown T. Hitbox it the two sqares on the sides.
+	Special: O that smashes down fast. Similar to Kirby's Down Special in SSBU.
+	Recovery: Up. Spinning T that propells upward. Does set knockback. Hitbox is the top three squares.
+
+Rex (Banchor):
+	Neutral: Simple stab. Can be aimed orthogonally.
+	Smash: Side/Up. Stabs, then twists the sword twice. The stab and first twist do set knockback.
+	Special: Uses Ring of Thunder to smash the sword down, creating a small explosion of lighning. The sword itself is a hitbox that does set knockback, leading into the powerful explosion. Very slow, but very powerful.
+	Recovery: Up. Uses Winged Boots to propel upward very far. Hitbox is his whole body, but is only active for a short time after launch.
+
+Fox (SSBO):
+	Neutral: Same as SSBO.
+	Smash: Up. Same as SSBO.
+	Special: Same as SSBO, but travels farther than Up Special and actually has a hitbox.
+	Recovery: Up. Same as SSBO, but the first part does flinching damage.
+
+Pac-Man:
+	Neutral: Bites three times. The first two deal flinching damage.
+	Smash: Side/Up. Same as SSBU.
+	Special: Eats four Pac-Dots, one at a time, then a Power Pellet. Each Pac-Dot heals 1-2%, and the Power Pellet buffs damage for a while. Takes a while to complete. Can be cancelled between each Pac-Dot.
+	Recovery: Side/Up. Similar to SSBU, but only five Pac-Dots and no Power Pellet. They don't have hitboxes, and can only spawn orthogonally from each other.
+
+Snake:
+	Neutral: Extends similar to Tetronimo's, but can be aimed orthogonally.
+	Smash: Side/Up. Similar to Neutral, but extends much farther and does mode damage.
+	Special: Eats an apple and heals 5%.
+	Recovery: Side/Up. Similar to Pac-Man's, but only 3 apples, which spawn father away from each other.
+
+Gemini:
+	Neutral: Swipe with a knife. Can be aimed orthogonally.
+	Smash: Forward/Up. Shotgun blast with little range, but heavy knockback and damage.
+	Special: Hitscan pistol that deals 1-2% and no knockback. Can be aimed orthogonally.
+	Recovery: Fires a chaingun down, propelling himself upward.
+
+Oiram:
+	Neutral: Kicks as if kicking a shell. High knockback, low damage.
+	Smash: Down. Spins the Tanooki tail around. Hitbox lasts for a while.
+	Special: Throws a fireball that despawns after hitting something.
+	Recovery: Spins a few times with the Tanooki suit. Each spin has a hitbox and propels Oiram upward.
+
+Stickman:
+	Neutral: Drops a box with his current velocity that despawns after a few seconds. It's strength is determined by it's velocity.
+	Smash: Up. Presses a button on the ground, causing a block to rise out of the ground. Similar to Bayonetta's up smash.
+	Special: Shoots a paintball in the inputted direction. Fast, but weak. Despawns if it hits something, or if another one is shot.
+	Recovery: Neutral. A portal is created on the ground directly below you, replacing any previous portal. If there is already a portal, you will be teleported to it, even if a new portal is not made.
+
+Megaman:
+	Neutral: Plasma Cannon. Shoots a pellet of plasma with small damage, knockback, and cooldown. Can be aimed orthogonally.
+	Smash: Side/Up. Swearing Scream. Swears loudly. Massive hitbox, but low damage for a smash attack.
+	Special: Shoots a random projectile (anchor, stamp, splinter, badge, or milk), that do varying amounts of damage and knockback.
+	Recovery: Side. Bill charge. Transforms into a ball of energy and moves fairly far. Has full invincibility, but doesn't stop for anything and puts you into freefall.
+
+Thrasher:
+	Neutral: A simple kick.
+	Smash: Side. A strong punch. Comes out fairly quickly.
+	Special: Landing at least 3 attacks in the space of 2 seconds will add 1 to your combo bar. Once your combo far is full (5), this attack will deal immense damage and knockback with an uppercut. Similar to Little Mac's KO punch, but goes much higher.
+	Recovery: Side. Speeds across the screen similar to how the enemy approaches you in TI-Thrash. Stops when you hit something or get hit. Has a weak flinching hitbox.
+
+Reuben:
+	Neutral: A simple sword slash. Can be aimed orthogonally.
+	Smash: Side. Throws a bottle of Fire. Similar to Simon Belmont's holy water, but more damage and knockback, and only one hit.
+	Special: Cycles between Fire, Ice, and Bolt. Fire does more knockback, Ice does more hitstun, and Bolt does more damage. Pressing B while shielding will cycle without using the move.
+	Recovery: Upward slash similar to Marth's up special.
+
+Sword:
+	Neutral: A small upward stab in jump mode. A small horizontal stab in attack mode.
+	Smash: Up/Side. A strong upward stab in jump mode. A strong horizontal stab in attack mode.
+	Special: Switches between jump and attack mode. Jump mode increases jump height and height gained by recovering. Attack mode increases damage and speed, but lowers jump height and prevents double-jumping. Must be on the ground to use.
+	Recovery: Spawns a bounce pad that can be angled diagonally. It can be used by anyone until it disappears after a few seconds. While a bounce pad is active a new one cannot be created.

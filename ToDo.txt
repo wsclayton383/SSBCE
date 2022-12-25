@@ -1,0 +1,118 @@
+Grabs/Throws
+Parry
+Title
+Character/Stage Select Screen
+Pause screen
+Win Screen
+Sandbag
+CPUs
+Alt costumes
+Stamina mode
+CALCnet support?
+Final Smash?
+Damage font?
+Unique speed/weight/jump height?
+Intro/Idle/Win Animations?
+Taunts?
+Items?
+
+Characters/Costumes:
+	Rex (Banchor)
+	Fox/Falco (SSBO)
+	Pac-Man
+	Snake
+	Gemini/Doom Slayer
+	Oiram/Igiul
+	Stickman/Axioman (Tag, Portal Returns, Axio Man)
+	Megaman (Megaman 83)
+	Thrasher
+	Reuben
+	Sword (Swords 1&2)
+	
+	Alexis Belmont
+	Source Seekers/Dragonsglid/Sorcery of Uvutu
+	Diotem
+	Swordfighter
+	Synth (BASE 3)
+	Johnson/Stone (Alien Breed)
+	Clone (Desolate)
+	Geometry Dash
+	Madeline (CEleste)
+	Wizards/Legends?
+	Calcuzap/Galaga/Phoenix/HailStorm?
+	First Fantasy?
+	Steve/Socko?
+	PvP Craft?
+	Banchor?
+	Titanic Iniquity (Megaman 83)?
+	Flappy Bird?
+	Pokemon?
+	Sonic Up?
+	Unreal/Ultra Tournament?
+	Wii Play Tank?
+	Pete (Penguins)?
+	Kurai (Dying Eyes)?
+	Zenith Saga?
+	SQRXZ?
+	Puzzle Pack?
+	My First Quantum Translocator?
+	Robot War?
+	Thunderbirds?
+	inFINITE?
+	Text Dungeon?
+	X-Wing (2.1.4 - Revival)?
+	Hard Hat Mack?
+	Blinded by the Darkness?
+	Zombie Gun?
+	An Exercise in Futility?
+	Twilight Legion?
+	StickNinja?
+	Embers: Phoenix?
+	S.A.M.M.?
+	Block Dude/Trapped?
+
+	Variable (Similar to Mii Fighters):
+		A033
+		Age of Darkness
+		Flatforme
+		MOVE3
+		Solius
+		D-Fend
+		RPG Game
+		PLATFORM
+		HUNT
+		TI-Rogue?
+
+Stages:
+	Hell (Banchor)
+	Oiram
+	Penguins
+	Uvutu
+	Tetris
+	Wings of War
+	Pacmaze
+	Donkey Kong
+	Androides
+	Cellar
+	Desolate
+	Portal Returns
+	Donkey Kong
+	Flappy Bird
+	Fruit Ninja?
+	World's Hardest Game?
+	Geometry Dash?
+	Minesweeper?
+	Conway's GoL?
+	FNAF?
+	2048?
+	Robot Finds Kitty?
+	Drugwars?
+	ColorZ?
+	This is the Only Level?
+	Breakout?
+	Oregan Trail?
+	JPL?
+	TI-Trek?
+	Acelgoyobis?
+	Jezzball?
+	Jumpman?
