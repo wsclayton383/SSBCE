@@ -6,6 +6,7 @@
 *.sln
 *.vcxproj
 *.filters
+*.wsp
 damage.fnt
 damage.png
 runnable-hiero.jar
