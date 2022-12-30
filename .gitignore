@@ -3,6 +3,15 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+*.sln
+*.vcxproj
+*.filters
+damage.fnt
+damage.png
+runnable-hiero.jar
+Movesets.txt
+ToDo.txt
+
 # User-specific files
 *.rsuser
 *.suo
