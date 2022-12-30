@@ -57,7 +57,7 @@ int main()
     int selection2;
     vector<char*> menuList;
     menuList.push_back("Local");
-    menuList.push_back("Online");
+    menuList.push_back("Link");
     menuList.push_back("Options");
     vector<char*> optionsList;
     optionsList.push_back("Stocks: ");
@@ -100,11 +100,10 @@ int main()
                 for (int i = 0; i < (int)menuList.size(); i++)
                 {
                     gfx_SetTextFGColor(32 + (i == selection) * 129);
-                    gfx_PrintStringXY(menuList[i], 9, 8 * i + 9);
-                    gfx_TransparentSprite(buttonleft, 1, 8 * i + 9);
-                    gfx_TransparentSprite(buttonright, gfx_GetTextX(), 8 * i + 9);
+                    gfx_PrintStringXY(menuList[i], 9, 10 * i + 11);
+                    gfx_TransparentSprite(buttonleft, 1, 10 * i + 11);
+                    gfx_TransparentSprite(buttonright, gfx_GetTextX(), 10 * i + 11);
                 }
-                //gfx_PrintStringXY(">", 1, 8 * selection + 9);
                 gfx_SwapDraw();
 
                 //Menu
@@ -147,12 +146,23 @@ int main()
                             gfx_SetTextFGColor(32);
                             gfx_SetTextBGColor(255);
                             gfx_PrintStringXY("Character Select", 1, 1);
+                            gfx_SetTextBGColor(5);
                             for (int i = 0; i < (int)characterList.size(); i++)
                             {
-                                gfx_PrintStringXY(characterList[i], 17, 8 * i + 9);
+                                gfx_SetTextFGColor(32 + (i == selection) * 129);
+                                gfx_PrintStringXY(characterList[i], 9, 10 * i + 11);
+                                gfx_TransparentSprite(buttonleft, 1, 10 * i + 11);
+                                gfx_TransparentSprite(buttonright, gfx_GetTextX(), 10 * i + 11);
                             }
-                            gfx_PrintStringXY(">", 1, 8 * selection + 9);
-                            gfx_PrintStringXY(">", 9, 8 * selection2 + 9);
+                            for (int i = 0; i < (int)characterList.size(); i++)
+                            {
+                                gfx_SetTextFGColor(32 + (i == selection2) * 129);
+                                gfx_PrintStringXY(characterList[i], 115, 10 * i + 11);
+                                gfx_TransparentSprite(buttonleft, 107, 10 * i + 11);
+                                gfx_TransparentSprite(buttonright, gfx_GetTextX(), 10 * i + 11);
+                            }
+                            //gfx_PrintStringXY(">", 1, 8 * selection + 9);
+                            //gfx_PrintStringXY(">", 9, 8 * selection2 + 9);
                             gfx_SwapDraw();
 
                             //Character Select
@@ -219,11 +229,14 @@ int main()
                                     gfx_SetTextFGColor(32);
                                     gfx_SetTextBGColor(255);
                                     gfx_PrintStringXY("Stage Select ", 1, 1);
+                                    gfx_SetTextBGColor(5);
                                     for (int i = 0; i < (int)stageList.size(); i++)
                                     {
-                                        gfx_PrintStringXY(stageList[i], 9, 8 * i + 9);
+                                        gfx_SetTextFGColor(32 + (i == selection) * 129);
+                                        gfx_PrintStringXY(stageList[i], 9, 10 * i + 11);
+                                        gfx_TransparentSprite(buttonleft, 1, 10 * i + 11);
+                                        gfx_TransparentSprite(buttonright, gfx_GetTextX(), 10 * i + 11);
                                     }
-                                    gfx_PrintStringXY(">", 1, 8 * selection + 9);
                                     gfx_SwapDraw();
 
                                     //Stage Select
