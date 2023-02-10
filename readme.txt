@@ -1,11 +1,9 @@
 Super Smash Bros. CE
-Beta v0.3
+v1.0
 By theflamingninja21
 TI-84+ CE
 
-I added stocks to the damage GUI, as well as the announcer countdown and "Game!".
-Platforms have been added to the test stage.
-Bug fixes, optimization, etc.
+First major release! There's finally a title screen and a menu. My lack of artistic talent is starting to show, but it's a lot better than nothing. With the menu comes some options, which are stored in an appvar. There's also a stage select screen, including the stages Move and Boo from Super Smash Bros Open, with functioning moving platforms.
 
 
 Controls:
@@ -35,8 +33,12 @@ y=/window (debug): Enables/disables fps and frameskip display, and shows hitboxe
 +,- (debug):	Add,subtract damage.
 
 
+Debug controls require debug mode to be enabled in the options menu.
+
+
 Changelog:
 
 Beta v0.1		Initial release
 Beta v0.2		Added 2nd player. Debug now shows hitboxes.
 Beta v0.3		Added platforms, stocks, and countdown.
+v1.0			Added menu, more stages, options, and moving platforms.
