@@ -31,6 +31,8 @@ converts:
       - title.png
       - buttonleft.png
       - buttonright.png
+      - buttonleftselect.png
+      - buttonrightselect.png
 
 outputs:
   - type: c

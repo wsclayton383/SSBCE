@@ -32,7 +32,7 @@ struct Player
 	bool facingLeft = false;
 	bool airborne;
 	bool onSemi;
-	bool intangible = true;
+	bool intangible = false;
 	int jumps, maxJumps = 2;
 	int releasedTime[9] = { 120, 120, 120, 120, 120, 120, 120, 120, 120 };
 	int heldTime[9] = { 120, 120, 120, 120, 120, 120, 120, 120, 120 };

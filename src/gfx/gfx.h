@@ -10,6 +10,8 @@ extern "C" {
 #include "title.h"
 #include "buttonleft.h"
 #include "buttonright.h"
+#include "buttonleftselect.h"
+#include "buttonrightselect.h"
 
 #ifdef __cplusplus
 }

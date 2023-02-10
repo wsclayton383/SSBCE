@@ -93,16 +93,30 @@ int main()
             {
                 gfx_SetPalette(menu_palette, sizeof_menu_palette, menu_palette_offset);
                 gfx_FillScreen(93);
-                gfx_SetTextFGColor(32);
+                gfx_SetTextFGColor(5);
                 gfx_SetTextBGColor(255);
+                gfx_SetTextScale(2, 2);
                 gfx_PrintStringXY("Menu ", 1, 1);
-                gfx_SetTextBGColor(5);
+                gfx_SetTextScale(1, 1);
+                
                 for (int i = 0; i < (int)menuList.size(); i++)
                 {
-                    gfx_SetTextFGColor(32 + (i == selection) * 129);
-                    gfx_PrintStringXY(menuList[i], 9, 10 * i + 11);
-                    gfx_TransparentSprite(buttonleft, 1, 10 * i + 11);
-                    gfx_TransparentSprite(buttonright, gfx_GetTextX(), 10 * i + 11);
+                    if (i == selection)
+                    {
+                        gfx_SetTextFGColor(6);
+                        gfx_SetTextBGColor(5);
+                        gfx_PrintStringXY(menuList[i], 9, 10 * i + 20);
+                        gfx_TransparentSprite(buttonleftselect, 1, 10 * i + 20);
+                        gfx_TransparentSprite(buttonrightselect, gfx_GetTextX(), 10 * i + 20);
+                    }
+                    else
+                    {
+                        gfx_SetTextFGColor(5);
+                        gfx_SetTextBGColor(6);
+                        gfx_PrintStringXY(menuList[i], 9, 10 * i + 20);
+                        gfx_TransparentSprite(buttonleft, 1, 10 * i + 20);
+                        gfx_TransparentSprite(buttonright, gfx_GetTextX(), 10 * i + 20);
+                    }
                 }
                 gfx_SwapDraw();
 
@@ -143,23 +157,47 @@ int main()
                         {
                             gfx_SetPalette(menu_palette, sizeof_menu_palette, menu_palette_offset);
                             gfx_FillScreen(93);
-                            gfx_SetTextFGColor(32);
+                            gfx_SetTextFGColor(5);
                             gfx_SetTextBGColor(255);
                             gfx_PrintStringXY("Character Select", 1, 1);
                             gfx_SetTextBGColor(5);
                             for (int i = 0; i < (int)characterList.size(); i++)
                             {
-                                gfx_SetTextFGColor(32 + (i == selection) * 129);
-                                gfx_PrintStringXY(characterList[i], 9, 10 * i + 11);
-                                gfx_TransparentSprite(buttonleft, 1, 10 * i + 11);
-                                gfx_TransparentSprite(buttonright, gfx_GetTextX(), 10 * i + 11);
+                                if (i == selection)
+                                {
+                                    gfx_SetTextFGColor(6);
+                                    gfx_SetTextBGColor(5);
+                                    gfx_PrintStringXY(characterList[i], 9, 10 * i + 11);
+                                    gfx_TransparentSprite(buttonleftselect, 1, 10 * i + 11);
+                                    gfx_TransparentSprite(buttonrightselect, gfx_GetTextX(), 10 * i + 11);
+                                }
+                                else
+                                {
+                                    gfx_SetTextFGColor(5);
+                                    gfx_SetTextBGColor(6);
+                                    gfx_PrintStringXY(characterList[i], 9, 10 * i + 11);
+                                    gfx_TransparentSprite(buttonleft, 1, 10 * i + 11);
+                                    gfx_TransparentSprite(buttonright, gfx_GetTextX(), 10 * i + 11);
+                                }
                             }
                             for (int i = 0; i < (int)characterList.size(); i++)
                             {
-                                gfx_SetTextFGColor(32 + (i == selection2) * 129);
-                                gfx_PrintStringXY(characterList[i], 115, 10 * i + 11);
-                                gfx_TransparentSprite(buttonleft, 107, 10 * i + 11);
-                                gfx_TransparentSprite(buttonright, gfx_GetTextX(), 10 * i + 11);
+                                if (i == selection)
+                                {
+                                    gfx_SetTextFGColor(6);
+                                    gfx_SetTextBGColor(5);
+                                    gfx_PrintStringXY(characterList[i], 115, 10 * i + 11);
+                                    gfx_TransparentSprite(buttonleftselect, 107, 10 * i + 11);
+                                    gfx_TransparentSprite(buttonrightselect, gfx_GetTextX(), 10 * i + 11);
+                                }
+                                else
+                                {
+                                    gfx_SetTextFGColor(5);
+                                    gfx_SetTextBGColor(6);
+                                    gfx_PrintStringXY(characterList[i], 115, 10 * i + 11);
+                                    gfx_TransparentSprite(buttonleft, 107, 10 * i + 11);
+                                    gfx_TransparentSprite(buttonright, gfx_GetTextX(), 10 * i + 11);
+                                }
                             }
                             //gfx_PrintStringXY(">", 1, 8 * selection + 9);
                             //gfx_PrintStringXY(">", 9, 8 * selection2 + 9);
@@ -226,16 +264,28 @@ int main()
                                 {
                                     gfx_SetPalette(menu_palette, sizeof_menu_palette, menu_palette_offset);
                                     gfx_FillScreen(93);
-                                    gfx_SetTextFGColor(32);
+                                    gfx_SetTextFGColor(5);
                                     gfx_SetTextBGColor(255);
                                     gfx_PrintStringXY("Stage Select ", 1, 1);
                                     gfx_SetTextBGColor(5);
                                     for (int i = 0; i < (int)stageList.size(); i++)
                                     {
-                                        gfx_SetTextFGColor(32 + (i == selection) * 129);
-                                        gfx_PrintStringXY(stageList[i], 9, 10 * i + 11);
-                                        gfx_TransparentSprite(buttonleft, 1, 10 * i + 11);
-                                        gfx_TransparentSprite(buttonright, gfx_GetTextX(), 10 * i + 11);
+                                        if (i == selection)
+                                        {
+                                            gfx_SetTextFGColor(6);
+                                            gfx_SetTextBGColor(5);
+                                            gfx_PrintStringXY(stageList[i], 9, 10 * i + 11);
+                                            gfx_TransparentSprite(buttonleftselect, 1, 10 * i + 11);
+                                            gfx_TransparentSprite(buttonrightselect, gfx_GetTextX(), 10 * i + 11);
+                                        }
+                                        else
+                                        {
+                                            gfx_SetTextFGColor(5);
+                                            gfx_SetTextBGColor(6);
+                                            gfx_PrintStringXY(stageList[i], 9, 10 * i + 11);
+                                            gfx_TransparentSprite(buttonleft, 1, 10 * i + 11);
+                                            gfx_TransparentSprite(buttonright, gfx_GetTextX(), 10 * i + 11);
+                                        }
                                     }
                                     gfx_SwapDraw();
 
@@ -284,17 +334,17 @@ int main()
                                             break;
                                         case 2:
                                             s.bgColor = 174;
-                                            s.solids.push_back(Solid(80, 135, 160, 13, 33));
-                                            s.solids.push_back(Solid(40, 104, 40, 5, 33, true, true));
+                                            s.solids.push_back(Solid(80, 140, 160, 13, 33));
+                                            s.solids.push_back(Solid(40, 110, 40, 5, 33, true, true));
                                             s.solids[1].moveX.push_back(40);
                                             s.solids[1].moveX.push_back(120);
-                                            s.solids[1].moveY.push_back(104);
-                                            s.solids[1].moveY.push_back(104);
-                                            s.solids.push_back(Solid(240, 104, 40, 5, 33, true, true));
+                                            s.solids[1].moveY.push_back(110);
+                                            s.solids[1].moveY.push_back(110);
+                                            s.solids.push_back(Solid(240, 110, 40, 5, 33, true, true));
                                             s.solids[2].moveX.push_back(240);
                                             s.solids[2].moveX.push_back(160);
-                                            s.solids[2].moveY.push_back(104);
-                                            s.solids[2].moveY.push_back(104);
+                                            s.solids[2].moveY.push_back(110);
+                                            s.solids[2].moveY.push_back(110);
                                             break;
                                         case 3:
                                             s.bgColor = 174;
@@ -487,6 +537,7 @@ void battle()
     finalDes = gfx_MallocSprite(200, 100);
     zx0_Decompress(finalDes, finalDes_compressed);
     s.solids[0].anim.frames.push_back(finalDes);*/
+
     vector<Player*> players;
     switch (p1Char)
     {
@@ -522,11 +573,15 @@ void battle()
     players[0]->team = 1;
     players[0]->xpos = 107 + (players[0]->team == 2) * 95;
     players[0]->ypos = 75;
+    players[0]->xvel = 0;
+    players[0]->yvel = 0;
     players[0]->stocks = options[0];
 
     players[1]->team = 2;
     players[1]->xpos = 107 + (players[1]->team == 2) * 95;
     players[1]->ypos = 75;
+    players[1]->xvel = 0;
+    players[1]->yvel = 0;
     players[1]->facingLeft = true;
     players[1]->stocks = options[0];
 
@@ -552,12 +607,14 @@ void battle()
     int fps = 0;
     int targetFPS = 60;
     bool debug = false;
+    int temp1 = 0;
+    int temp2 = 0;
     timer_Enable(1, TIMER_32K, TIMER_NOINT, TIMER_UP);
     gfx_SetTextXY(10, 10);
     timer_Set(1, 0);
     do
     {
-        if ((int)timer_Get(1) >= 32768 / 60)
+        if ((int)timer_Get(1) >= 32768 / targetFPS)
         {
             fps = 32768 / timer_Get(1);
             timer_Set(1, 0);

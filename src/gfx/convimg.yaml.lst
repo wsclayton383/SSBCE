@@ -1,0 +1,16 @@
+menu_palette.h
+menu_palette.c
+title.h
+title.c
+buttonleft.h
+buttonleft.c
+buttonright.h
+buttonright.c
+buttonleftselect.h
+buttonleftselect.c
+buttonrightselect.h
+buttonrightselect.c
+gfx.h
+tetrisgfx.h
+tetrisgfx.c
+tetrisgfx.8xv

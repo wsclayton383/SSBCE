@@ -1,9 +1,10 @@
-unsigned char menu_palette[12] =
+unsigned char menu_palette[14] =
 {
     0x10, 0x7c, /*   0: rgb(255,   0, 132) */
     0x00, 0x7c, /*   1: rgb(255,   0,   0) */
     0x1f, 0x00, /*   2: rgb(  0,   0, 255) */
     0xe0, 0xff, /*   3: rgb(255, 255,   0) */
     0xe0, 0x83, /*   4: rgb(  0, 255,   0) */
-    0x00, 0x40, /*   5: rgb(132,   0,   0) */
+    0x00, 0x00, /*   5: rgb(  0,   0,   0) */
+    0x00, 0x40, /*   6: rgb(132,   0,   0) */
 };
