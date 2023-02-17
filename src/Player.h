@@ -15,7 +15,7 @@ using namespace tinystl;
 
 enum { idle, shield, shieldbroken, dodge, spotdodge, airdodge, freefall, attackneutral, smashcharge, attacksmash, attackspecial, attackrecovery };
 
-enum { tetris };
+enum { tetris, oiram };
 
 struct Player
 {
@@ -42,16 +42,15 @@ struct Player
 	char* name;
 	gfx_sprite_t* blast;
 	vector<Animation> anims;
-	vector<Projectile> projs;
-	Hitbox h;
-	Hitbox temp;
-	vector<Hitbox> hboxes;
+	Hitbox h, tempH;
 
 	virtual int loadSprites() {};
 
 	virtual void setPalette() {};
 
 	virtual void update(bool keyA, bool keyB, bool keyG, bool keyJ, bool keyS, bool keyDown, bool keyLeft, bool keyRight, bool keyUp) {};
+
+	virtual void renderProjs() {};
 
 	void collide()
 	{
@@ -140,6 +139,7 @@ struct Player
 		setPalette();
 		//gfx_TransparentSprite(anims[0].frames[0], 64 * team + 6, 212 - hboxy / 2);
 		gfx_SetTextXY(72 * team - 40, 215);
+		gfx_SetTextFGColor(5);
 		gfx_SetTextBGColor(team);
 		gfx_PrintInt(damage / 10, 1);
 		gfx_PrintChar('.');
@@ -156,11 +156,6 @@ struct Player
 			gfx_FillCircle_NoClip(xpos + hboxx / 2 - anims[2].xOffset, ypos + hboxy / 2, 5 - shieldDamage / 60 + (hboxx - anims[2].xOffset) / 2);
 		}
 
-		for (int i = 0; i < (int)projs.size(); i++)
-		{
-			//projs[i].render();
-		}
-
-		//gfx_SetPalette(menu_palette, sizeof_menu_palette, 0);
+		renderProjs();
 	}
 };

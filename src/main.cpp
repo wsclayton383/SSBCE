@@ -18,6 +18,7 @@
 #include <TINYSTL/vector.h>
 #include "Player.h"
 #include "Tetris.h"
+#include "Oiram.h"
 #include "Projectile.h"
 #include "Hitbox.h"
 #include "Animation.h"
@@ -64,6 +65,7 @@ int main()
     optionsList.push_back("Debug Mode: ");
     vector<char*> characterList;
     characterList.push_back("Tetronimo");
+    characterList.push_back("Oiram");
     vector<char*> stageList;
     stageList.push_back("Final Destination");
     stageList.push_back("Battlefield");
@@ -75,8 +77,9 @@ int main()
         gfx_SetPalette(menu_palette, sizeof_menu_palette, menu_palette_offset);
         gfx_FillScreen(93);
         gfx_TransparentSprite(title, 70, 50);
-        gfx_SetTextFGColor(32);
+        gfx_SetTextFGColor(5);
         gfx_SetTextBGColor(255);
+        gfx_SetTextScale(1, 1);
         gfx_PrintStringXY("Press 2nd", 127, 187);
         gfx_SwapDraw();
         //Start
@@ -95,9 +98,9 @@ int main()
                 gfx_FillScreen(93);
                 gfx_SetTextFGColor(5);
                 gfx_SetTextBGColor(255);
-                gfx_SetTextScale(2, 2);
+                gfx_SetTextScale(4, 4);
                 gfx_PrintStringXY("Menu ", 1, 1);
-                gfx_SetTextScale(1, 1);
+                gfx_SetTextScale(2, 2);
                 
                 for (int i = 0; i < (int)menuList.size(); i++)
                 {
@@ -105,17 +108,17 @@ int main()
                     {
                         gfx_SetTextFGColor(6);
                         gfx_SetTextBGColor(5);
-                        gfx_PrintStringXY(menuList[i], 9, 10 * i + 20);
-                        gfx_TransparentSprite(buttonleftselect, 1, 10 * i + 20);
-                        gfx_TransparentSprite(buttonrightselect, gfx_GetTextX(), 10 * i + 20);
+                        gfx_PrintStringXY(menuList[i], 17, 20 * i + 36);
+                        gfx_ScaledTransparentSprite_NoClip(buttonleftselect, 1, 20 * i + 36, 2, 2);
+                        gfx_ScaledTransparentSprite_NoClip(buttonrightselect, gfx_GetTextX(), 20 * i + 36, 2, 2);
                     }
                     else
                     {
                         gfx_SetTextFGColor(5);
                         gfx_SetTextBGColor(6);
-                        gfx_PrintStringXY(menuList[i], 9, 10 * i + 20);
-                        gfx_TransparentSprite(buttonleft, 1, 10 * i + 20);
-                        gfx_TransparentSprite(buttonright, gfx_GetTextX(), 10 * i + 20);
+                        gfx_PrintStringXY(menuList[i], 17, 20 * i + 36);
+                        gfx_ScaledTransparentSprite_NoClip(buttonleft, 1, 20 * i + 36, 2, 2);
+                        gfx_ScaledTransparentSprite_NoClip(buttonright, gfx_GetTextX(), 20 * i + 36, 2, 2);
                     }
                 }
                 gfx_SwapDraw();
@@ -159,6 +162,7 @@ int main()
                             gfx_FillScreen(93);
                             gfx_SetTextFGColor(5);
                             gfx_SetTextBGColor(255);
+                            gfx_SetTextScale(1, 1);
                             gfx_PrintStringXY("Character Select", 1, 1);
                             gfx_SetTextBGColor(5);
                             for (int i = 0; i < (int)characterList.size(); i++)
@@ -182,7 +186,7 @@ int main()
                             }
                             for (int i = 0; i < (int)characterList.size(); i++)
                             {
-                                if (i == selection)
+                                if (i == selection2)
                                 {
                                     gfx_SetTextFGColor(6);
                                     gfx_SetTextBGColor(5);
@@ -250,12 +254,18 @@ int main()
                                 case 0:
                                     p1Char = tetris;
                                     break;
+                                case 1:
+                                    p1Char = oiram;
+                                    break;
                                 }
                                 switch (selection2)
                                 {
                                 default:
                                 case 0:
                                     p2Char = tetris;
+                                    break;
+                                case 1:
+                                    p2Char = oiram;
                                     break;
                                 }
 
@@ -445,6 +455,7 @@ int main()
                                     gfx_FillScreen(93);
                                     gfx_SetTextFGColor(32);
                                     gfx_SetTextBGColor(255);
+                                    gfx_SetTextScale(1, 1);
                                     gfx_PrintStringXY("Options ", 1, 1);
                                     for (int i = 0; i < (int)optionsList.size(); i++)
                                     {
@@ -522,11 +533,11 @@ int main()
 
 void battle()
 {
-    gfx_SetTransparentColor(0);
+    /*gfx_SetTransparentColor(0);
     gfx_SetColor(100);
     gfx_SetPalette(global_palette, sizeof_global_palette, 0);
 
-    /*s.bgColor = 93;
+    s.bgColor = 93;
     s.solids.push_back(Solid(80, 135, 160, 26));
     s.solids.push_back(Solid(100, 161, 120, 26));
     s.solids.push_back(Solid(100, 104, 40, 5, true));
@@ -538,29 +549,47 @@ void battle()
     zx0_Decompress(finalDes, finalDes_compressed);
     s.solids[0].anim.frames.push_back(finalDes);*/
 
+    gfx_SetPalette(global_palette, sizeof_global_palette, 0);
+
     vector<Player*> players;
     switch (p1Char)
     {
     default:
     case tetris:
+    {
         Tetris* p1 = new Tetris;
         players.push_back(p1);
         break;
+    }
+    case oiram:
+    {
+        Oiram* p1 = new Oiram;
+        players.push_back(p1);
+        break;
+    }
     }
     switch (p2Char)
     {
     default:
     case tetris:
+    {
         Tetris* p2 = new Tetris;
         players.push_back(p2);
         break;
+    }
+    case oiram:
+    {
+        Oiram* p2 = new Oiram;
+        players.push_back(p2);
+        break;
+    }
     }
     for (int i = 0; i < (int)players.size(); i++)
     {
         if (players[i]->loadSprites())
         {
             gfx_SetTextXY(10, 10);
-            gfx_SetTextFGColor(32);
+            gfx_SetTextFGColor(5);
             gfx_SetTextBGColor(255);
             gfx_FillScreen(93);
             gfx_PrintString("Missing AppVar");
@@ -587,7 +616,7 @@ void battle()
 
     //free(finalDes);
 
-    gfx_SetTextFGColor(32);
+    gfx_SetTextFGColor(5);
     gfx_SetTextBGColor(255);
     for (int i = 3; i > 0; i--)
     {
@@ -607,8 +636,6 @@ void battle()
     int fps = 0;
     int targetFPS = 60;
     bool debug = false;
-    int temp1 = 0;
-    int temp2 = 0;
     timer_Enable(1, TIMER_32K, TIMER_NOINT, TIMER_UP);
     gfx_SetTextXY(10, 10);
     timer_Set(1, 0);
@@ -642,17 +669,20 @@ void battle()
                 if (debug)
                 {
                     gfx_SetTextXY(10, 10);
-                    gfx_SetTextFGColor(32);
+                    gfx_SetTextFGColor(5);
                     gfx_SetTextBGColor(255);
                     gfx_PrintInt(fps, 1);
                     gfx_SetTextXY(10, 20);
                     gfx_PrintInt(frameSkip, 1);
                     gfx_SetTextXY(10, 30);
-                    gfx_SetColor(32);
-                    for (int i = 0; i < (int)s.hboxes.size(); i++)
+                    for (int i = 0; i < (int)players.size(); i++)
                     {
-                        gfx_FillRectangle(s.hboxes[i].x1, s.hboxes[i].y1, s.hboxes[i].x2, s.hboxes[i].y2);
+                        gfx_SetColor(players[i]->team);
+                        gfx_Rectangle(players[i]->xpos, players[i]->ypos, players[i]->hboxx, players[i]->hboxy);
                     }
+                    gfx_SetColor(5);
+                    for (int i = 0; i < (int)s.hboxes.size(); i++)
+                        gfx_Rectangle(s.hboxes[i].x1, s.hboxes[i].y1, s.hboxes[i].x2, s.hboxes[i].y2);
                 }
                 gfx_SwapDraw();
             }
@@ -668,7 +698,7 @@ void battle()
 
     if (!players[0]->stocks || !players[1]->stocks)
     {
-        gfx_SetTextFGColor(32);
+        gfx_SetTextFGColor(5);
         gfx_SetTextBGColor(255);
         s.render();
         gfx_PrintStringXY("Game!", 142, 116);

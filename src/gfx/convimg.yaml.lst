@@ -1,5 +1,7 @@
 menu_palette.h
 menu_palette.c
+global_palette.h
+global_palette.c
 title.h
 title.c
 buttonleft.h
@@ -14,3 +16,6 @@ gfx.h
 tetrisgfx.h
 tetrisgfx.c
 tetrisgfx.8xv
+oiramgfx.h
+oiramgfx.c
+oiramgfx.8xv

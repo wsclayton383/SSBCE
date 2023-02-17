@@ -17,6 +17,7 @@ struct Stage
 
 	void render()
 	{
+		gfx_SetPalette(global_palette, sizeof_global_palette, 0);
 		gfx_FillScreen(bgColor);
 		for (int i = 0; i < (int)solids.size(); i++)
 		{

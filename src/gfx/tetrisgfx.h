@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#define sizeof_global_palette 28
+#define sizeof_global_palette 350
 #define global_palette (tetrisgfx_appvar[0])
 #define tetris_palette_offset 0
 #define tetrisattackneutralleft1_width 16

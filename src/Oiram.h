@@ -1,9 +1,13 @@
 #pragma once
 #include "Player.h"
-#include "gfx/tetrisgfx.h"
+#include "OiramFire.h"
+#include "gfx/oiramgfx.h"
 
-struct Tetris : public Player
+struct Oiram : public Player
 {
+	OiramFire fireball;
+	vector<OiramFire> projs;
+
 	void update(bool keyA, bool keyB, bool keyG, bool keyJ, bool keyS, bool keyDown, bool keyLeft, bool keyRight, bool keyUp)
 	{
 		h = tempH;
@@ -76,18 +80,25 @@ struct Tetris : public Player
 						state = attackrecovery;
 						currentAnim = 11;
 						currentFrame = 0;
-						moveTimer = 45;
+						moveTimer = 66;
 						lagTimer = 6;
 						yvel = 0;
 					}
 					else
 					{
-						state = attackspecial;
-						currentAnim = 10;
-						currentFrame = 0;
-						moveTimer = 15;
-						lagTimer = 10;
-						yvel = -20;
+						if ((int)projs.size() < 2)
+						{
+							OiramFire p = fireball;
+							p.duration = 120;
+							p.team = team;
+							p.xpos = xpos + 4;
+							p.ypos = ypos + 14;
+							p.xvel = 12 * (2 * !facingLeft - 1);
+							p.yvel = 9;
+							p.currentAnim = facingLeft;
+							projs.push_back(p);
+							lagTimer = 10;
+						}
 					}
 				}
 				else if (keyG)
@@ -196,9 +207,9 @@ struct Tetris : public Player
 			}
 			h.damage = 16;
 			h.knockback = 9;
-			h.x1 = xpos + 5 * (2 * !facingLeft - 1);
-			h.x2 = 11;
-			h.y1 = ypos + 5;
+			h.x1 = xpos + 10 * !facingLeft;
+			h.x2 = 6;
+			h.y1 = ypos + 21;
 			h.y2 = 6;
 			h.team = team;
 			s.hboxes.push_back(h);
@@ -223,39 +234,19 @@ struct Tetris : public Player
 			}
 			h.damage = 30;
 			h.knockback = 12;
-			h.x1 = xpos - 5;
-			h.x2 = 21;
-			h.y1 = ypos + 10;
-			h.y2 = 6;
+			h.x1 = xpos - 5 + 19 * (currentFrame >= 15);
+			h.x2 = 8;
+			h.y1 = ypos + 17;
+			h.y2 = 9;
 			h.team = team;
 			s.hboxes.push_back(h);
-			break;
-		case attackspecial:
-			if (airborne)
-				yvel++;
-			else
-				moveTimer--;
-			if (moveTimer <= 0 || (keyB && releasedTime[1]))
-			{
-				moveTimer = 0;
-				state = idle;
-			}
-			if (yvel > 0)
-			{
-				h.damage = 25;
-				h.knockback = 12;
-				h.x1 = xpos;
-				h.x2 = 11;
-				h.y1 = ypos + 5;
-				h.y2 = 11;
-				h.team = team;
-				s.hboxes.push_back(h);
-			}
 			break;
 		case attackrecovery:
 			moveTimer--;
 			xvel += keyRight - keyLeft;
-			yvel -= 1 + (yvel > -14);
+			//yvel -= 1 + (yvel > -14);
+			if (currentFrame % 15 == 1)
+				yvel = -14;
 			if (moveTimer <= 0)
 			{
 				moveTimer = 0;
@@ -264,10 +255,10 @@ struct Tetris : public Player
 			}
 			h.damage = 10;
 			h.knockback = 8;
-			h.x1 = xpos - 3;
-			h.x2 = 16;
-			h.y1 = ypos + 5;
-			h.y2 = 6;
+			h.x1 = xpos - 5 + 19 * (currentFrame>=15);
+			h.x2 = 8;
+			h.y1 = ypos + 17;
+			h.y2 = 9;
 			h.team = team;
 			s.hboxes.push_back(h);
 		}
@@ -298,9 +289,11 @@ struct Tetris : public Player
 
 		knockbackMultiplier = 1 + damage / 200.0;
 
+		if (state == idle && abs(xvel) < 7)
+			currentFrame = 0;
 		currentFrame++;
 
-		bool keys[9] = {keyA, keyB, keyG, keyJ, keyS, keyDown, keyLeft, keyRight, keyUp};
+		bool keys[9] = { keyA, keyB, keyG, keyJ, keyS, keyDown, keyLeft, keyRight, keyUp };
 		for (int i = 0; i < 9; i++)
 		{
 			releasedTime[i]++;
@@ -308,66 +301,78 @@ struct Tetris : public Player
 			heldTime[i]++;
 			heldTime[i] *= keys[i];
 		}
+
+		for (int i = 0; i < (int)projs.size(); i++)
+		{
+			projs[i].update();
+			if (projs[i].duration <= 0)
+			{
+				for (int j = i; j < (int)projs.size() - 1; j++)
+					projs[j] = projs[j + 1];
+				projs.pop_back();
+			}
+		}
 	}
-	
+
 	int loadSprites()
 	{
-		if (tetrisgfx_init() == 0)
+		if (oiramgfx_init() == 0)
 			return 1;
 
 		Animation idleRight;
-		idleRight.frames.push_back(tetrisidleright1);
-		
+		idleRight.frames.push_back(oiramright1);
+		idleRight.frames.push_back(oiramright2);
+		idleRight.ticksPerFrame = 10;
+
 		Animation idleLeft;
-		idleLeft.frames.push_back(tetrisidleleft1);
-		
+		idleLeft.frames.push_back(oiramleft1);
+		idleLeft.frames.push_back(oiramleft2);
+		idleLeft.ticksPerFrame = 10;
+
 		Animation shield;
-		shield.frames.push_back(tetrisshield1);
-		shield.yOffset = 5;
+		shield.frames.push_back(oiramshield1);
+		shield.xOffset = 2;
+		shield.yOffset = 11;
 
 		Animation shieldBroken;
 		shieldBroken.ticksPerFrame = 45;
-		
+
 		Animation dodgeLeft;
-		dodgeLeft.frames.push_back(tetrisdodgeleft1);
-		shieldBroken.frames.push_back(tetrisdodgeleft1);
-		
+		dodgeLeft.frames.push_back(oiramright2);
+		shieldBroken.frames.push_back(oiramright2);
+
 		Animation dodgeRight;
-		dodgeRight.frames.push_back(tetrisdodgeright1);
-		shieldBroken.frames.push_back(tetrisdodgeright1);
-		
+		dodgeRight.frames.push_back(oiramleft2);
+		shieldBroken.frames.push_back(oiramleft2);
+
 		Animation neutralLeft;
-		neutralLeft.frames.push_back(tetrisattackneutralleft1);
-		neutralLeft.xOffset = -5;
-		neutralLeft.yOffset = 5;
-		
+		neutralLeft.frames.push_back(oiramleft2);
+
 		Animation neutralRight;
-		neutralRight.frames.push_back(tetrisattackneutralright1);
-		neutralRight.yOffset = 5;
-		
+		neutralRight.frames.push_back(oiramright2);
+
 		Animation smashCharge;
-		smashCharge.frames.push_back(tetrisattacksmashcharge1);
-		smashCharge.xOffset = 2;
-		smashCharge.yOffset = -5;
-		
+		smashCharge.frames.push_back(oiramsmashcharge1);
+		smashCharge.xOffset = -5;
+
 		Animation smash;
-		smash.frames.push_back(tetrisattacksmash1);
+		smash.frames.push_back(oiramspin1);
+		smash.frames.push_back(oiramspin2);
 		smash.xOffset = -5;
-		smash.yOffset = 10;
-		
+		smash.ticksPerFrame = 10;
+
 		Animation special;
-		special.frames.push_back(tetrisattackspecial1);
-		special.yOffset = 5;
-		
+		special.frames.push_back(oiramright1);
+
 		Animation recovery;
-		recovery.frames.push_back(tetrisattackrecovery1);
-		recovery.frames.push_back(tetrisattackrecovery2);
-		recovery.xOffset = -3;
-		recovery.yOffset = 5;
+		recovery.frames.push_back(oiramspin1);
+		recovery.frames.push_back(oiramspin2);
+		recovery.xOffset = -5;
 		recovery.ticksPerFrame = 15;
 
-		hboxx = 11;
-		hboxy = 16;
+		hboxx = 16;
+		hboxy = 27;
+
 		anims.push_back(idleRight);
 		anims.push_back(idleLeft);
 		anims.push_back(shield);
@@ -381,13 +386,19 @@ struct Tetris : public Player
 		anims.push_back(special);
 		anims.push_back(recovery);
 
+		fireball.loadSprites();
+
 		return 0;
 	}
 
 	void setPalette()
 	{
-		gfx_SetPalette(global_palette, sizeof_global_palette, tetris_palette_offset);
+		gfx_SetPalette(global_palette, sizeof_global_palette, oiram_palette_offset);
 	}
 
-	void renderProjs() {};
+	void renderProjs()
+	{
+		for (int i = 0; i < (int)projs.size(); i++)
+			projs[i].render();
+	}
 };
