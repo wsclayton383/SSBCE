@@ -6,6 +6,7 @@
 #include "Stage.h"
 #include "Solid.h"
 #include "gfx/gfx.h"
+#include "gfx/chargfx.h"
 #include "gfx/menu_palette.h"
 #include <TINYSTL/vector.h>
 #include <string.h>
@@ -15,7 +16,7 @@ using namespace tinystl;
 
 enum { idle, shield, shieldbroken, dodge, spotdodge, airdodge, freefall, attackneutral, smashcharge, attacksmash, attackspecial, attackrecovery };
 
-enum { tetris, oiram };
+enum { tetris, oiram, fox };
 
 struct Player
 {
@@ -33,6 +34,7 @@ struct Player
 	bool airborne;
 	bool onSemi;
 	bool intangible = false;
+	int iFrames = 0;
 	int jumps, maxJumps = 2;
 	int releasedTime[9] = { 120, 120, 120, 120, 120, 120, 120, 120, 120 };
 	int heldTime[9] = { 120, 120, 120, 120, 120, 120, 120, 120, 120 };
@@ -54,9 +56,10 @@ struct Player
 
 	void collide()
 	{
+		iFrames -= (iFrames != 0);
 		for (int i = 0; i < (int)s.hboxes.size(); i++)
 		{
-			if (!intangible && s.hboxes[i].team != team && gfx_CheckRectangleHotspot(xpos, ypos, hboxx - 1, hboxy - 1, s.hboxes[i].x1, s.hboxes[i].y1, s.hboxes[i].x2, s.hboxes[i].y2))
+			if (!intangible && !iFrames && s.hboxes[i].team != team && gfx_CheckRectangleHotspot(xpos, ypos, hboxx - 1, hboxy - 1, s.hboxes[i].x1, s.hboxes[i].y1, s.hboxes[i].x2, s.hboxes[i].y2))
 			{
 				if (state == shield)
 				{
@@ -65,14 +68,27 @@ struct Player
 				else
 				{
 					damage += s.hboxes[i].damage;
-					float x = (2.0 * xpos + hboxx) / 2.0 - (2.0 * s.hboxes[i].x1 + s.hboxes[i].x2) / 2.0;
-					float y = (2.0 * ypos + hboxy) / 2.0 - (2.0 * s.hboxes[i].y1 + s.hboxes[i].y2) / 2.0;
-					xvel = x / pow(pow(x, 2.0) + pow(y, 2.0), 0.5);
-					yvel = y / pow(pow(x, 2.0) + pow(y, 2.0), 0.5);
-					xvel *= knockbackMultiplier * s.hboxes[i].knockback;
-					yvel *= knockbackMultiplier * s.hboxes[i].knockback;
+					if (s.hboxes[i].xKnockback || s.hboxes[i].yKnockback)
+					{
+						xvel = s.hboxes[i].xKnockback;
+						yvel = s.hboxes[i].yKnockback;
+					}
+					else
+					{
+						float x = (2.0 * xpos + hboxx) / 2.0 - (2.0 * s.hboxes[i].x1 + s.hboxes[i].x2) / 2.0;
+						float y = (2.0 * ypos + hboxy) / 2.0 - (2.0 * s.hboxes[i].y1 + s.hboxes[i].y2) / 2.0;
+						xvel = x / pow(pow(x, 2.0) + pow(y, 2.0), 0.5);
+						yvel = y / pow(pow(x, 2.0) + pow(y, 2.0), 0.5);
+					}
+					if (!s.hboxes[i].setKnockback)
+					{
+						xvel *= knockbackMultiplier * s.hboxes[i].knockback;
+						yvel *= knockbackMultiplier * s.hboxes[i].knockback;
+					}
+					
 					moveTimer = 0;
-					lagTimer = 10;
+					lagTimer = s.hboxes[i].hitStun * (1 + damage / 800.0);
+					iFrames = s.hboxes[i].iFrames;
 					state = idle;
 				}
 			}
@@ -136,7 +152,6 @@ struct Player
 
 	void render()
 	{
-		setPalette();
 		//gfx_TransparentSprite(anims[0].frames[0], 64 * team + 6, 212 - hboxy / 2);
 		gfx_SetTextXY(72 * team - 40, 215);
 		gfx_SetTextFGColor(5);
@@ -148,6 +163,7 @@ struct Player
 		gfx_SetTextXY(72 * team - 32, 224);
 		gfx_PrintInt(stocks, 1);
 
+		gfx_SetPalette(character_palette, sizeof_character_palette, 0);
 		currentFrame *= (currentFrame < anims[currentAnim].ticksPerFrame * (int)anims[currentAnim].frames.size());
 		gfx_TransparentSprite(anims[currentAnim].frames[currentFrame / anims[currentAnim].ticksPerFrame], xpos + anims[currentAnim].xOffset, ypos + anims[currentAnim].yOffset);
 		if (state == shield)

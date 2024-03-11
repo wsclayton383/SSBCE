@@ -1,6 +1,5 @@
 #pragma once
 #include "Projectile.h"
-#include "gfx/oiramgfx.h"
 
 struct OiramFire : public Projectile
 {
@@ -20,26 +19,28 @@ struct OiramFire : public Projectile
 		}
 
 		Hitbox h;
-		h.damage = 16;
+		h.damage = 50;
 		h.knockback = 9;
 		h.x1 = xpos;
 		h.x2 = 8;
 		h.y1 = ypos;
 		h.y2 = 8;
 		h.team = team;
+		h.iFrames = 30;
+		h.hitStun = 20;
 		s.hboxes.push_back(h);
 	}
 
 	void loadSprites()
 	{
 		Animation right;
-		right.frames.push_back(fireright1);
-		right.frames.push_back(fireright2);
+		right.frames.push_back(oiramfireright1);
+		right.frames.push_back(oiramfireright2);
 		right.ticksPerFrame = 10;
 
 		Animation left;
-		left.frames.push_back(fireleft1);
-		left.frames.push_back(fireleft2);
+		left.frames.push_back(gfx_FlipSpriteY(oiramfireright1, gfx_MallocSprite(8, 8)));
+		left.frames.push_back(gfx_FlipSpriteY(oiramfireright2, gfx_MallocSprite(8, 8)));
 		left.ticksPerFrame = 10;
 
 		hboxx = 8;

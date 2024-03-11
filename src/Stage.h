@@ -6,7 +6,7 @@
 #include "Solid.h"
 #include "gfx/gfx.h"
 
-enum { finalDestination };
+enum { finalDestination, battlefield, move, boo };
 
 struct Stage
 {
@@ -17,7 +17,7 @@ struct Stage
 
 	void render()
 	{
-		gfx_SetPalette(global_palette, sizeof_global_palette, 0);
+		gfx_SetPalette(character_palette, sizeof_character_palette, 0);
 		gfx_FillScreen(bgColor);
 		for (int i = 0; i < (int)solids.size(); i++)
 		{

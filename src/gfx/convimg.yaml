@@ -1,5 +1,5 @@
 palettes:
-  - name: global_palette
+  - name: character_palette
     fixed-entries:
       - color: {index: 0, r: 255, g: 0, b: 128}
       - color: {index: 1, r: 255, g: 0, b: 0}
@@ -25,18 +25,7 @@ palettes:
     images: automatic
 
 converts:
-  - name: tetris
-    palette: global_palette
-    transparent-color-index: 0
-    width-and-height: true
-    images:
-      - tetris/*
-  - name: oiram
-    palette: global_palette
-    transparent-color-index: 0
-    width-and-height: true
-    images:
-      - oiram/*
+
   - name: menu
     palette: menu_palette
     transparent-color-index: 0
@@ -47,28 +36,27 @@ converts:
       - buttonright.png
       - buttonleftselect.png
       - buttonrightselect.png
+  - name: characters
+    palette: character_palette
+    transparent-color-index: 0
+    width-and-height: true
+    images:
+      - tetris/*
+      - oiram/*
+      - fox/*
 
 outputs:
   - type: c
     include-file: gfx.h
     palettes:
       - menu_palette
-      - global_palette
     converts:
       - menu
   - type: appvar
-    name: tetrisgfx
-    include-file: tetrisgfx.h
+    name: chargfx
+    include-file: chargfx.h
     source-format: c
     palettes:
-    - global_palette
+    - character_palette
     converts:
-    - tetris
-  - type: appvar
-    name: oiramgfx
-    include-file: oiramgfx.h
-    source-format: c
-    palettes:
-    - global_palette
-    converts:
-    - oiram
+    - characters

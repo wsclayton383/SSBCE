@@ -1,7 +1,6 @@
 #pragma once
 #include "Player.h"
 #include "OiramFire.h"
-#include "gfx/oiramgfx.h"
 
 struct Oiram : public Player
 {
@@ -22,7 +21,7 @@ struct Oiram : public Player
 			else
 			{
 				xvel += (2 + !airborne) * (keyRight - keyLeft);
-				if (keyDown && onSemi && (yvel >= 10 || (releasedTime[5] <= 30 && !heldTime[5])))
+				if (keyDown && onSemi && (yvel >= 10 || (releasedTime[5] <= 20 && !heldTime[5])))
 				{
 					ypos += 3;
 					if (yvel < 10)
@@ -79,7 +78,7 @@ struct Oiram : public Player
 					{
 						state = attackrecovery;
 						currentAnim = 11;
-						currentFrame = 0;
+						currentFrame = 15 * facingLeft;
 						moveTimer = 66;
 						lagTimer = 6;
 						yvel = 0;
@@ -205,13 +204,17 @@ struct Oiram : public Player
 				moveTimer = 0;
 				state = idle;
 			}
-			h.damage = 16;
-			h.knockback = 9;
+			h.damage = 80;
+			h.knockback = 6;
 			h.x1 = xpos + 10 * !facingLeft;
 			h.x2 = 6;
 			h.y1 = ypos + 21;
 			h.y2 = 6;
 			h.team = team;
+			h.iFrames = moveTimer;
+			h.hitStun = moveTimer;
+			h.xKnockback = !facingLeft * 3.0 - 1.5;
+			h.yKnockback = -1;
 			s.hboxes.push_back(h);
 			break;
 		case smashcharge:
@@ -232,19 +235,20 @@ struct Oiram : public Player
 				moveTimer = 0;
 				state = idle;
 			}
-			h.damage = 30;
+			h.damage = 150;
 			h.knockback = 12;
 			h.x1 = xpos - 5 + 19 * (currentFrame >= 15);
 			h.x2 = 8;
 			h.y1 = ypos + 17;
 			h.y2 = 9;
 			h.team = team;
+			h.iFrames = moveTimer;
+			h.hitStun = moveTimer;
 			s.hboxes.push_back(h);
 			break;
 		case attackrecovery:
 			moveTimer--;
 			xvel += keyRight - keyLeft;
-			//yvel -= 1 + (yvel > -14);
 			if (currentFrame % 15 == 1)
 				yvel = -14;
 			if (moveTimer <= 0)
@@ -253,13 +257,18 @@ struct Oiram : public Player
 				state = freefall;
 				currentFrame = 0;
 			}
-			h.damage = 10;
+			h.damage = 50;
 			h.knockback = 8;
-			h.x1 = xpos - 5 + 19 * (currentFrame>=15);
+			h.x1 = xpos - 5 + 19 * (currentFrame >= 15);
 			h.x2 = 8;
 			h.y1 = ypos + 17;
 			h.y2 = 9;
 			h.team = team;
+			h.iFrames = 10;
+			h.hitStun = 20;
+			h.setKnockback = true;
+			h.xKnockback = 30 * (currentFrame < 15) - 15;
+			h.yKnockback = -23;
 			s.hboxes.push_back(h);
 		}
 
@@ -316,17 +325,14 @@ struct Oiram : public Player
 
 	int loadSprites()
 	{
-		if (oiramgfx_init() == 0)
-			return 1;
-
 		Animation idleRight;
 		idleRight.frames.push_back(oiramright1);
 		idleRight.frames.push_back(oiramright2);
 		idleRight.ticksPerFrame = 10;
 
 		Animation idleLeft;
-		idleLeft.frames.push_back(oiramleft1);
-		idleLeft.frames.push_back(oiramleft2);
+		idleLeft.frames.push_back(gfx_FlipSpriteY(oiramright1, gfx_MallocSprite(16, 27)));
+		idleLeft.frames.push_back(gfx_FlipSpriteY(oiramright2, gfx_MallocSprite(16, 27)));
 		idleLeft.ticksPerFrame = 10;
 
 		Animation shield;
@@ -342,11 +348,11 @@ struct Oiram : public Player
 		shieldBroken.frames.push_back(oiramright2);
 
 		Animation dodgeRight;
-		dodgeRight.frames.push_back(oiramleft2);
-		shieldBroken.frames.push_back(oiramleft2);
+		dodgeRight.frames.push_back(idleLeft.frames[1]);
+		shieldBroken.frames.push_back(idleLeft.frames[1]);
 
 		Animation neutralLeft;
-		neutralLeft.frames.push_back(oiramleft2);
+		neutralLeft.frames.push_back(idleLeft.frames[1]);
 
 		Animation neutralRight;
 		neutralRight.frames.push_back(oiramright2);
@@ -356,17 +362,17 @@ struct Oiram : public Player
 		smashCharge.xOffset = -5;
 
 		Animation smash;
+		smash.frames.push_back(gfx_FlipSpriteY(oiramspin1, gfx_MallocSprite(26, 27)));
 		smash.frames.push_back(oiramspin1);
-		smash.frames.push_back(oiramspin2);
 		smash.xOffset = -5;
 		smash.ticksPerFrame = 10;
 
 		Animation special;
-		special.frames.push_back(oiramright1);
+		special.frames.push_back(oiramright2);
 
 		Animation recovery;
+		recovery.frames.push_back(smash.frames[0]);
 		recovery.frames.push_back(oiramspin1);
-		recovery.frames.push_back(oiramspin2);
 		recovery.xOffset = -5;
 		recovery.ticksPerFrame = 15;
 
@@ -393,7 +399,7 @@ struct Oiram : public Player
 
 	void setPalette()
 	{
-		gfx_SetPalette(global_palette, sizeof_global_palette, oiram_palette_offset);
+		gfx_SetPalette(character_palette, sizeof_character_palette, 0);
 	}
 
 	void renderProjs()
