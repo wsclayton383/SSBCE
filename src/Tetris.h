@@ -1,6 +1,5 @@
 #pragma once
 #include "Player.h"
-#include "gfx/tetrisgfx.h"
 
 struct Tetris : public Player
 {
@@ -18,7 +17,7 @@ struct Tetris : public Player
 			else
 			{
 				xvel += (2 + !airborne) * (keyRight - keyLeft);
-				if (keyDown && onSemi && (yvel >= 10 || (releasedTime[5] <= 30 && !heldTime[5])))
+				if (keyDown && onSemi && (yvel >= 10 || (releasedTime[5] <= 20 && !heldTime[5])))
 				{
 					ypos += 3;
 					if (yvel < 10)
@@ -194,13 +193,17 @@ struct Tetris : public Player
 				moveTimer = 0;
 				state = idle;
 			}
-			h.damage = 16;
+			h.damage = 80;
 			h.knockback = 9;
-			h.x1 = xpos + 5 * (2 * !facingLeft - 1);
-			h.x2 = 11;
-			h.y1 = ypos + 5;
-			h.y2 = 6;
+			h.x1 = xpos + 7 * (2 * !facingLeft - 1);
+			h.x2 = 15;
+			h.y1 = ypos + 7;
+			h.y2 = 8;
 			h.team = team;
+			h.iFrames = moveTimer;
+			h.hitStun = moveTimer;
+			h.xKnockback = !facingLeft * 3.0 - 1.5;
+			h.yKnockback = -1;
 			s.hboxes.push_back(h);
 			break;
 		case smashcharge:
@@ -221,13 +224,15 @@ struct Tetris : public Player
 				moveTimer = 0;
 				state = idle;
 			}
-			h.damage = 30;
+			h.damage = 150;
 			h.knockback = 12;
-			h.x1 = xpos - 5;
-			h.x2 = 21;
-			h.y1 = ypos + 10;
-			h.y2 = 6;
+			h.x1 = xpos - 7;
+			h.x2 = 29;
+			h.y1 = ypos + 14;
+			h.y2 = 8;
 			h.team = team;
+			h.iFrames = moveTimer;
+			h.hitStun = moveTimer;
 			s.hboxes.push_back(h);
 			break;
 		case attackspecial:
@@ -242,13 +247,15 @@ struct Tetris : public Player
 			}
 			if (yvel > 0)
 			{
-				h.damage = 25;
+				h.damage = 125;
 				h.knockback = 12;
 				h.x1 = xpos;
-				h.x2 = 11;
-				h.y1 = ypos + 5;
-				h.y2 = 11;
+				h.x2 = 15;
+				h.y1 = ypos + 7;
+				h.y2 = 15;
 				h.team = team;
+				h.iFrames = 15;
+				h.hitStun = 15;
 				s.hboxes.push_back(h);
 			}
 			break;
@@ -262,13 +269,18 @@ struct Tetris : public Player
 				state = freefall;
 				currentFrame = 0;
 			}
-			h.damage = 10;
-			h.knockback = 8;
-			h.x1 = xpos - 3;
-			h.x2 = 16;
-			h.y1 = ypos + 5;
-			h.y2 = 6;
+			h.damage = 30;
+			h.knockback = 1;
+			h.x1 = xpos - 4;
+			h.x2 = 22;
+			h.y1 = ypos + 7;
+			h.y2 = 8;
 			h.team = team;
+			h.iFrames = 7;
+			h.hitStun = 20;
+			h.setKnockback = true;
+			h.xKnockback = 0;
+			h.yKnockback = -15;
 			s.hboxes.push_back(h);
 		}
 
@@ -276,6 +288,8 @@ struct Tetris : public Player
 		ypos += yvel / 7;
 		if (state != attackneutral)
 			xvel *= 0.9 - 0.1 * !airborne;
+		if (iFrames)
+			yvel *= 0.9 - 0.1 * !airborne;
 		yvel++;
 		airborne = true;
 
@@ -312,14 +326,11 @@ struct Tetris : public Player
 	
 	int loadSprites()
 	{
-		if (tetrisgfx_init() == 0)
-			return 1;
-
 		Animation idleRight;
-		idleRight.frames.push_back(tetrisidleright1);
+		idleRight.frames.push_back(tetrisright1);
 		
 		Animation idleLeft;
-		idleLeft.frames.push_back(tetrisidleleft1);
+		idleLeft.frames.push_back(tetrisleft1);
 		
 		Animation shield;
 		shield.frames.push_back(tetrisshield1);
@@ -338,36 +349,36 @@ struct Tetris : public Player
 		
 		Animation neutralLeft;
 		neutralLeft.frames.push_back(tetrisattackneutralleft1);
-		neutralLeft.xOffset = -5;
-		neutralLeft.yOffset = 5;
+		neutralLeft.xOffset = -7;
+		neutralLeft.yOffset = 7;
 		
 		Animation neutralRight;
 		neutralRight.frames.push_back(tetrisattackneutralright1);
-		neutralRight.yOffset = 5;
+		neutralRight.yOffset = 7;
 		
 		Animation smashCharge;
 		smashCharge.frames.push_back(tetrisattacksmashcharge1);
-		smashCharge.xOffset = 2;
-		smashCharge.yOffset = -5;
+		smashCharge.xOffset = 3;
+		smashCharge.yOffset = -7;
 		
 		Animation smash;
 		smash.frames.push_back(tetrisattacksmash1);
-		smash.xOffset = -5;
-		smash.yOffset = 10;
+		smash.xOffset = -7;
+		smash.yOffset = 14;
 		
 		Animation special;
 		special.frames.push_back(tetrisattackspecial1);
-		special.yOffset = 5;
+		special.yOffset = 7;
 		
 		Animation recovery;
 		recovery.frames.push_back(tetrisattackrecovery1);
 		recovery.frames.push_back(tetrisattackrecovery2);
-		recovery.xOffset = -3;
-		recovery.yOffset = 5;
+		recovery.xOffset = -4;
+		recovery.yOffset = 7;
 		recovery.ticksPerFrame = 15;
 
-		hboxx = 11;
-		hboxy = 16;
+		hboxx = 15;
+		hboxy = 22;
 		anims.push_back(idleRight);
 		anims.push_back(idleLeft);
 		anims.push_back(shield);
@@ -386,7 +397,7 @@ struct Tetris : public Player
 
 	void setPalette()
 	{
-		gfx_SetPalette(global_palette, sizeof_global_palette, tetris_palette_offset);
+		gfx_SetPalette(character_palette, sizeof_character_palette, 0);
 	}
 
 	void renderProjs() {};

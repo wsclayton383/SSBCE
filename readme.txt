@@ -1,9 +1,11 @@
 Super Smash Bros. CE
-v1.0
+v1.1
 By theflamingninja21
 TI-84+ CE
 
-First major release! There's finally a title screen and a menu. My lack of artistic talent is starting to show, but it's a lot better than nothing. With the menu comes some options, which are stored in an appvar. There's also a stage select screen, including the stages Move and Boo from Super Smash Bros Open, with functioning moving platforms.
+After being dead for a year, I have returned with an update for you all. Enjoy the two new characters!
+
+Also a more accurate knockback system.
 
 
 Controls:
@@ -30,7 +32,7 @@ Clear: Exit.
 
 y=/window (debug): Enables/disables fps and frameskip display, and shows hitboxes.
 
-+,- (debug):	Add,subtract damage.
++,- (debug):	Add,subtract damage from P1.
 
 
 Debug controls require debug mode to be enabled in the options menu.
@@ -42,3 +44,4 @@ Beta v0.1		Initial release
 Beta v0.2		Added 2nd player. Debug now shows hitboxes.
 Beta v0.3		Added platforms, stocks, and countdown.
 v1.0			Added menu, more stages, options, and moving platforms.
+v1.1			Added Oiram and Fox. Overhauled knockback system.

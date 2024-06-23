@@ -6,7 +6,6 @@ extern "C" {
 #endif
 
 #include "menu_palette.h"
-#include "global_palette.h"
 #define menu_palette_offset 0
 #include "title.h"
 #include "buttonleft.h"

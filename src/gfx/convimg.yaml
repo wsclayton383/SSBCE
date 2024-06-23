@@ -1,5 +1,5 @@
 palettes:
-  - name: global_palette
+  - name: character_palette
     fixed-entries:
       - color: {index: 0, r: 255, g: 0, b: 128}
       - color: {index: 1, r: 255, g: 0, b: 0}
@@ -14,6 +14,23 @@ palettes:
       - color: {index: 93, r: 89, g: 171, b: 239}
       - color: {index: 174, r: 174, g: 216, b: 116}
     images: automatic
+  - name: alt_palette
+    fixed-entries:
+      - color: {index: 0, r: 255, g: 0, b: 128}
+      - color: {index: 1, r: 255, g: 0, b: 0}
+      - color: {index: 2, r: 0, g: 0, b: 255}
+      - color: {index: 3, r: 255, g: 255, b: 0}
+      - color: {index: 4, r: 0, g: 255, b: 0}
+      - color: {index: 5, r: 0, g: 0, b: 0}
+      - color: {index: 8, r: 136, g: 147, b: 117}
+      - color: {index: 16, r: 7, g: 0, b: 133}
+      - color: {index: 17, r: 7, g: 26, b: 141}
+      - color: {index: 33, r: 27, g: 31, b: 2}
+      - color: {index: 34, r: 27, g: 67, b: 7}
+      - color: {index: 93, r: 89, g: 171, b: 239}
+      - color: {index: 173, r: 26, g: 28, b: 22}
+      - color: {index: 174, r: 174, g: 216, b: 116}
+    images: automatic
   - name: menu_palette
     fixed-entries:
       - color: {index: 0, r: 255, g: 0, b: 128}
@@ -25,18 +42,7 @@ palettes:
     images: automatic
 
 converts:
-  - name: tetris
-    palette: global_palette
-    transparent-color-index: 0
-    width-and-height: true
-    images:
-      - tetris/*
-  - name: oiram
-    palette: global_palette
-    transparent-color-index: 0
-    width-and-height: true
-    images:
-      - oiram/*
+
   - name: menu
     palette: menu_palette
     transparent-color-index: 0
@@ -47,28 +53,28 @@ converts:
       - buttonright.png
       - buttonleftselect.png
       - buttonrightselect.png
+  - name: characters
+    palette: character_palette
+    transparent-color-index: 0
+    width-and-height: true
+    images:
+      - tetris/alt0/*
+      - oiram/alt0/*
+      - fox/alt0/*
 
 outputs:
   - type: c
     include-file: gfx.h
     palettes:
       - menu_palette
-      - global_palette
     converts:
       - menu
   - type: appvar
-    name: tetrisgfx
-    include-file: tetrisgfx.h
+    name: chargfx
+    include-file: chargfx.h
     source-format: c
     palettes:
-    - global_palette
+    - character_palette
+    - alt_palette
     converts:
-    - tetris
-  - type: appvar
-    name: oiramgfx
-    include-file: oiramgfx.h
-    source-format: c
-    palettes:
-    - global_palette
-    converts:
-    - oiram
+    - characters

@@ -1,6 +1,7 @@
 #pragma once
 #include "Animation.h"
 #include "Hitbox.h"
+#include "gfx/chargfx.h"
 #include <TINYSTL/vector.h>
 #include <string.h>
 
@@ -22,6 +23,7 @@ struct Projectile
 
 	void render()
 	{
+		gfx_SetPalette(character_palette, sizeof_character_palette, 0);
 		currentFrame *= (currentFrame < anims[currentAnim].ticksPerFrame* (int)anims[currentAnim].frames.size());
 		gfx_TransparentSprite(anims[currentAnim].frames[currentFrame / anims[currentAnim].ticksPerFrame], xpos, ypos);
 	}
