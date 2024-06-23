@@ -4,6 +4,7 @@
 #include "Animation.h"
 #include "Hitbox.h"
 #include "Solid.h"
+#include "TempSprite.h"
 #include "gfx/gfx.h"
 
 enum { finalDestination, battlefield, move, boo };
@@ -13,6 +14,7 @@ struct Stage
 	int id;
 	vector<Solid> solids;
 	vector<Hitbox> hboxes;
+	vector<vector<TempSprite>> tSprites;
 	int bgColor = 255;
 
 	void render()
@@ -24,6 +26,15 @@ struct Stage
 			//if (solids[i].anim.frames.size())
 				solids[i].render();
 		}
+	}
+	void restore()
+	{
+		gfx_SetPalette(character_palette, sizeof_character_palette, 0);
+		for (int i = tSprites[0].size() - 1; i >= 0; i++)
+			tSprites[0][i].render();
+		tSprites.erase(tSprites.begin());
+		vector<TempSprite> ts;
+		tSprites.push_back(ts);
 	}
 	void update()
 	{

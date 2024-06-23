@@ -316,6 +316,14 @@ void battle()
 	gfx_SwapDraw();
 	delay(1000);
 
+	s.render();
+	vector<TempSprite> ts;
+	s.tSprites.push_back(ts);
+	gfx_SwapDraw();
+	s.render();
+	s.tSprites.push_back(ts);
+	gfx_SwapDraw();
+
 	int frame = 0;
 	int frameSkip = 3;
 	int tps = 0;
@@ -352,7 +360,8 @@ void battle()
 			if (frame <= frameSkip || frameSkip == 30)
 			{
 				timer_Set(2, 0);
-				s.render();
+				//s.render();
+				s.restore();
 				players[0]->render();
 				players[1]->render();
 				if (debug)

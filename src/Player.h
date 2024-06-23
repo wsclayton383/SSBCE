@@ -162,6 +162,9 @@ struct Player
 		gfx_SetTextXY(72 * team - 32, 224);
 		gfx_PrintInt(stocks, 1);
 
+		TempSprite ts(xpos + anims[currentAnim].xOffset, ypos + anims[currentAnim].yOffset, anims[currentAnim].frames[currentFrame]->width, anims[currentAnim].frames[currentFrame]->height);
+		s.tSprites[1].push_back(ts);
+
 		gfx_SetPalette(character_palette, sizeof_character_palette, 0);
 		//setPalette();
 		currentFrame *= (currentFrame < anims[currentAnim].ticksPerFrame * (int)anims[currentAnim].frames.size());
