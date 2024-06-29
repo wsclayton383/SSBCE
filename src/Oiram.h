@@ -325,55 +325,50 @@ struct Oiram : public Player
 
 	int loadSprites()
 	{
-		Animation idleRight;
+		Animation idleRight(16, 27);
 		idleRight.frames.push_back(oiramright1);
 		idleRight.frames.push_back(oiramright2);
 		idleRight.ticksPerFrame = 10;
 
-		Animation idleLeft;
+		Animation idleLeft(16, 27);
 		idleLeft.frames.push_back(gfx_FlipSpriteY(oiramright1, gfx_MallocSprite(16, 27)));
 		idleLeft.frames.push_back(gfx_FlipSpriteY(oiramright2, gfx_MallocSprite(16, 27)));
 		idleLeft.ticksPerFrame = 10;
 
-		Animation shield;
+		Animation shield(14, 16, 2, 11);
 		shield.frames.push_back(oiramshield1);
-		shield.xOffset = 2;
-		shield.yOffset = 11;
 
-		Animation shieldBroken;
+		Animation shieldBroken(16, 27);
 		shieldBroken.ticksPerFrame = 45;
 
-		Animation dodgeLeft;
+		Animation dodgeLeft(16, 27);
 		dodgeLeft.frames.push_back(oiramright2);
 		shieldBroken.frames.push_back(oiramright2);
 
-		Animation dodgeRight;
+		Animation dodgeRight(16, 27);
 		dodgeRight.frames.push_back(idleLeft.frames[1]);
 		shieldBroken.frames.push_back(idleLeft.frames[1]);
 
-		Animation neutralLeft;
+		Animation neutralLeft(16, 27);
 		neutralLeft.frames.push_back(idleLeft.frames[1]);
 
-		Animation neutralRight;
+		Animation neutralRight(16, 27);
 		neutralRight.frames.push_back(oiramright2);
 
-		Animation smashCharge;
+		Animation smashCharge(30, 30, -5);
 		smashCharge.frames.push_back(oiramsmashcharge1);
-		smashCharge.xOffset = -5;
 
-		Animation smash;
+		Animation smash(26, 27, -5);
 		smash.frames.push_back(gfx_FlipSpriteY(oiramspin1, gfx_MallocSprite(26, 27)));
 		smash.frames.push_back(oiramspin1);
-		smash.xOffset = -5;
 		smash.ticksPerFrame = 10;
 
-		Animation special;
+		Animation special(16, 27);
 		special.frames.push_back(oiramright2);
 
-		Animation recovery;
+		Animation recovery(26, 27, -5);
 		recovery.frames.push_back(smash.frames[0]);
 		recovery.frames.push_back(oiramspin1);
-		recovery.xOffset = -5;
 		recovery.ticksPerFrame = 15;
 
 		hboxx = 16;

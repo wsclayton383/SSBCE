@@ -33,12 +33,12 @@ struct OiramFire : public Projectile
 
 	void loadSprites()
 	{
-		Animation right;
+		Animation right(8, 8);
 		right.frames.push_back(oiramfireright1);
 		right.frames.push_back(oiramfireright2);
 		right.ticksPerFrame = 10;
 
-		Animation left;
+		Animation left(8, 8);
 		left.frames.push_back(gfx_FlipSpriteY(oiramfireright1, gfx_MallocSprite(8, 8)));
 		left.frames.push_back(gfx_FlipSpriteY(oiramfireright2, gfx_MallocSprite(8, 8)));
 		left.ticksPerFrame = 10;

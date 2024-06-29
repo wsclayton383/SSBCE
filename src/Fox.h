@@ -357,62 +357,54 @@ struct Fox : public Player
 
 	int loadSprites()
 	{
-		Animation idleRight;
+		Animation idleRight(23, 27, -4);
 		idleRight.frames.push_back(foxright1);
 		idleRight.frames.push_back(foxright2);
 		idleRight.frames.push_back(foxright3);
-		idleRight.xOffset = -4;
 		idleRight.ticksPerFrame = 15;
 
-		Animation idleLeft;
+		Animation idleLeft(23, 27, -3);
 		idleLeft.frames.push_back(gfx_FlipSpriteY(foxright1, gfx_MallocSprite(23, 27)));
 		idleLeft.frames.push_back(gfx_FlipSpriteY(foxright2, gfx_MallocSprite(23, 27)));
 		idleLeft.frames.push_back(gfx_FlipSpriteY(foxright3, gfx_MallocSprite(23, 27)));
-		idleLeft.xOffset = -3;
 		idleLeft.ticksPerFrame = 15;
 
-		Animation shield;
+		Animation shield(21, 27, -3);
 		shield.frames.push_back(foxshieldright1);
 		shield.frames.push_back(gfx_FlipSpriteY(foxshieldright1, gfx_MallocSprite(21, 27)));
-		shield.xOffset = -3;
 
-		Animation shieldBroken;
+		Animation shieldBroken(24, 27, -4);
 		shieldBroken.ticksPerFrame = 45;
 
-		Animation dodgeLeft;
+		Animation dodgeLeft(23, 27, -4);
 		dodgeLeft.frames.push_back(foxright2);
 		shieldBroken.frames.push_back(foxright2);
 
-		Animation dodgeRight;
+		Animation dodgeRight(23, 27, -3);
 		dodgeRight.frames.push_back(idleLeft.frames[1]);
 		shieldBroken.frames.push_back(idleLeft.frames[1]);
 
-		Animation neutralRight;
+		Animation neutralRight(24, 23);
 		neutralRight.frames.push_back(foxneutralright1);
 
-		Animation neutralLeft;
+		Animation neutralLeft(24, 23, -8);
 		neutralLeft.frames.push_back(gfx_FlipSpriteY(foxneutralright1, gfx_MallocSprite(24, 23)));
-		neutralLeft.xOffset = -8;
 
-		Animation smashCharge;
+		Animation smashCharge(24, 20, -5, 7);
 		smashCharge.frames.push_back(foxsmashchargeright1);
 		smashCharge.frames.push_back(gfx_FlipSpriteY(foxsmashchargeright1, gfx_MallocSprite(24, 20)));
-		smashCharge.xOffset = -5;
-		smashCharge.yOffset = 7;
 		smashCharge.ticksPerFrame = 99999;
 
-		Animation smash;
+		Animation smash(24, 24, -5, 3);
 		smash.frames.push_back(foxsmashright1);
 		smash.frames.push_back(foxsmashright2);
 		smash.frames.push_back(foxsmashright3);
-		smash.xOffset = -5;
-		smash.yOffset = 3;
 		smash.ticksPerFrame = 15;
 
-		Animation special;
+		Animation special(23, 27, -4);
 		special.frames.push_back(foxright1);
 
-		Animation recovery;
+		Animation recovery(32, 32, -5);
 		recovery.frames.push_back(foxrecoveryright1);
 		recovery.frames.push_back(foxrecoverydownright2);
 		recovery.frames.push_back(gfx_RotateSpriteC(foxrecoveryright2, gfx_MallocSprite(32, 32)));
@@ -423,7 +415,6 @@ struct Fox : public Player
 		recovery.frames.push_back(gfx_FlipSpriteX(foxrecoverydownright2, gfx_MallocSprite(30, 30)));
 		recovery.frames.push_back(gfx_RotateSpriteCC(foxrecoveryright2, gfx_MallocSprite(32, 32)));
 		recovery.frames.push_back(gfx_FlipSpriteY(recovery.frames[7], gfx_MallocSprite(30, 30)));
-		recovery.xOffset = -5;
 		recovery.ticksPerFrame = 99999;
 
 		hboxx = 16;

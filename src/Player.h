@@ -162,15 +162,21 @@ struct Player
 		gfx_SetTextXY(72 * team - 32, 224);
 		gfx_PrintInt(stocks, 1);
 
-		TempSprite ts(xpos + anims[currentAnim].xOffset, ypos + anims[currentAnim].yOffset, anims[currentAnim].frames[currentFrame]->width, anims[currentAnim].frames[currentFrame]->height);
-		s.tSprites[1].push_back(ts);
-
 		gfx_SetPalette(character_palette, sizeof_character_palette, 0);
 		//setPalette();
 		currentFrame *= (currentFrame < anims[currentAnim].ticksPerFrame * (int)anims[currentAnim].frames.size());
+
+		TempSprite* ts = new TempSprite;
+		ts->init(xpos + anims[currentAnim].xOffset, ypos + anims[currentAnim].yOffset, anims[currentAnim].width, anims[currentAnim].height);
+		s.tSprites[1].push_back(ts);
+
 		gfx_TransparentSprite(anims[currentAnim].frames[currentFrame / anims[currentAnim].ticksPerFrame], xpos + anims[currentAnim].xOffset, ypos + anims[currentAnim].yOffset);
 		if (state == shield)
 		{
+
+			TempSprite* ts = new TempSprite;
+			ts->init(xpos - anims[2].xOffset / 2 - 5 + shieldDamage / 60, ypos + hboxy / 2 - 5 + shieldDamage / 60 - (hboxx - anims[2].xOffset) / 2, 12 - shieldDamage / 30 + (hboxx - anims[2].xOffset), 11 - shieldDamage / 30 + (hboxx - anims[2].xOffset));
+			s.tSprites[1].push_back(ts);
 			gfx_SetColor(team);
 			gfx_FillCircle_NoClip(xpos + hboxx / 2 - anims[2].xOffset, ypos + hboxy / 2, 5 - shieldDamage / 60 + (hboxx - anims[2].xOffset) / 2);
 		}

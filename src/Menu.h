@@ -317,7 +317,7 @@ void battle()
 	delay(1000);
 
 	s.render();
-	vector<TempSprite> ts;
+	vector<TempSprite*> ts;
 	s.tSprites.push_back(ts);
 	gfx_SwapDraw();
 	s.render();
@@ -332,7 +332,6 @@ void battle()
 	int t = 0;
 	timer_Enable(1, TIMER_32K, TIMER_NOINT, TIMER_UP);
 	timer_Enable(2, TIMER_32K, TIMER_NOINT, TIMER_UP);
-	timer_Enable(3, TIMER_32K, TIMER_NOINT, TIMER_UP);
 	gfx_SetTextXY(10, 10);
 	timer_Set(1, 0);
 	do
@@ -346,7 +345,8 @@ void battle()
 				debug = true;
 			if (kb_Data[1] & kb_Window)
 				debug = false;
-			players[0]->damage += (kb_Data[6] & kb_Add) - (kb_Data[6] & kb_Sub);
+			if (debug)
+				players[0]->damage += (kb_Data[6] & kb_Add) - (kb_Data[6] & kb_Sub);
 			s.hboxes.clear();
 			players[0]->update(kb_Data[1] & kb_2nd, kb_Data[2] & kb_Alpha, kb_Data[2] & kb_Math, kb_Data[1] & kb_Mode, kb_Data[3] & kb_GraphVar, kb_Data[7] & kb_Down, kb_Data[7] & kb_Left, kb_Data[7] & kb_Right, kb_Data[7] & kb_Up);
 			players[1]->update(kb_Data[6] & kb_Power, kb_Data[6] & kb_Div, kb_Data[6] & kb_Mul, kb_Data[5] & kb_Tan, kb_Data[5] & kb_RParen, kb_Data[4] & kb_5, kb_Data[3] & kb_4, kb_Data[5] & kb_6, kb_Data[4] & kb_8);
@@ -362,10 +362,21 @@ void battle()
 				timer_Set(2, 0);
 				//s.render();
 				s.restore();
+				gfx_SetPalette(character_palette, sizeof_character_palette, 0);
+				for (int i = 0; i < (int)s.solids.size(); i++)
+				{
+					//if (solids[i].anim.frames.size())
+					if (s.solids[i].moving)
+						s.tSprites[1].push_back(s.solids[i].render());
+				}
 				players[0]->render();
 				players[1]->render();
+
 				if (debug)
 				{
+					TempSprite* ts = new TempSprite;
+					ts->init(10, 10, 90, 8);
+					s.tSprites[1].push_back(ts);
 					gfx_SetTextXY(10, 10);
 					gfx_SetTextFGColor(5);
 					gfx_SetTextBGColor(255);
@@ -376,23 +387,14 @@ void battle()
 					gfx_PrintInt(frameSkip, 1);
 					gfx_SetTextXY(70, 10);
 					gfx_PrintInt(t, 1);
-					if (s.hboxes.size())
-					{
-						gfx_SetTextXY(10, 20);
-						gfx_PrintInt(s.hboxes[0].knockback, 1);
-						gfx_SetTextXY(10, 30);
-						gfx_PrintInt(s.hboxes[0].xKnockback, 1);
-						gfx_SetTextXY(10, 40);
-						gfx_PrintInt(s.hboxes[0].yKnockback, 1);
-					}
-					for (int i = 0; i < (int)players.size(); i++)
-					{
-						gfx_SetColor(players[i]->team);
-						gfx_Rectangle(players[i]->xpos, players[i]->ypos, players[i]->hboxx, players[i]->hboxy);
-					}
 					gfx_SetColor(5);
 					for (int i = 0; i < (int)s.hboxes.size(); i++)
+					{
+						TempSprite* ts = new TempSprite;
+						ts->init(s.hboxes[i].x1, s.hboxes[i].y1, s.hboxes[i].x2, s.hboxes[i].y2);
+						s.tSprites[1].push_back(ts);
 						gfx_Rectangle(s.hboxes[i].x1, s.hboxes[i].y1, s.hboxes[i].x2, s.hboxes[i].y2);
+					}
 				}
 				gfx_SwapDraw();
 				if (timer_Get(2) > t)
@@ -417,6 +419,13 @@ void battle()
 		gfx_SwapDraw();
 		delay(1000);
 	}
+	for (int i = s.tSprites[0].size() - 1; i >= 0; i--)
+	{
+		s.tSprites[0][i]->render();
+		delete s.tSprites[0][i];
+	}
+	s.tSprites[0].clear();
+	s.tSprites[1].clear();
 	for (int i = 0; i < (int)players.size(); i++)
 		delete players[i];
 }

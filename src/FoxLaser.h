@@ -8,7 +8,6 @@ struct FoxLaser : public Projectile
 		duration--;
 
 		xpos += xvel / 7;
-		ypos += yvel / 7;
 
 		Hitbox h;
 		h.damage = 10;
@@ -21,10 +20,19 @@ struct FoxLaser : public Projectile
 		s.hboxes.push_back(h);
 	}
 
+	void render()
+	{
+		gfx_SetPalette(character_palette, sizeof_character_palette, 0);
+		TempSprite* ts = new TempSprite;
+		ts->init(xpos, ypos, 15, 3);
+		s.tSprites[1].push_back(ts);
+		gfx_SetColor(33);
+		gfx_FillRectangle(xpos, ypos, 15, 3);
+	}
+
 	void loadSprites()
 	{
-		Animation laser;
-		laser.frames.push_back(foxlaser1);
+		Animation laser(15, 3);
 		laser.ticksPerFrame = 99999;
 
 		hboxx = 15;

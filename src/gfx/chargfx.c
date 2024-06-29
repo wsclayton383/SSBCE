@@ -3,7 +3,7 @@
 
 #define chargfx_HEADER_SIZE 0
 
-unsigned char *chargfx_appvar[39] =
+unsigned char *chargfx_appvar[35] =
 {
     (unsigned char*)0,
     (unsigned char*)350,
@@ -20,30 +20,26 @@ unsigned char *chargfx_appvar[39] =
     (unsigned char*)3719,
     (unsigned char*)4051,
     (unsigned char*)4278,
-    (unsigned char*)4610,
-    (unsigned char*)4676,
-    (unsigned char*)4742,
-    (unsigned char*)5176,
-    (unsigned char*)5610,
-    (unsigned char*)5836,
-    (unsigned char*)6738,
-    (unsigned char*)7442,
-    (unsigned char*)7774,
-    (unsigned char*)7821,
-    (unsigned char*)8375,
-    (unsigned char*)9277,
-    (unsigned char*)10143,
-    (unsigned char*)11169,
-    (unsigned char*)11792,
-    (unsigned char*)12415,
-    (unsigned char*)13038,
-    (unsigned char*)13607,
-    (unsigned char*)14089,
-    (unsigned char*)14667,
-    (unsigned char*)15245,
-    (unsigned char*)15823,
-    (unsigned char*)16401,
-    (unsigned char*)16979,
+    (unsigned char*)4344,
+    (unsigned char*)4410,
+    (unsigned char*)4844,
+    (unsigned char*)5278,
+    (unsigned char*)5504,
+    (unsigned char*)6406,
+    (unsigned char*)7110,
+    (unsigned char*)7664,
+    (unsigned char*)8566,
+    (unsigned char*)9432,
+    (unsigned char*)10458,
+    (unsigned char*)11081,
+    (unsigned char*)11704,
+    (unsigned char*)12327,
+    (unsigned char*)12896,
+    (unsigned char*)13378,
+    (unsigned char*)13956,
+    (unsigned char*)14534,
+    (unsigned char*)15112,
+    (unsigned char*)15690,
 };
 
 unsigned char chargfx_init(void)
@@ -58,7 +54,7 @@ unsigned char chargfx_init(void)
     }
 
     data = (unsigned int)ti_GetDataPtr(appvar) - (unsigned int)chargfx_appvar[0] + chargfx_HEADER_SIZE;
-    for (i = 0; i < 39; i++)
+    for (i = 0; i < 35; i++)
     {
         chargfx_appvar[i] += data;
     }

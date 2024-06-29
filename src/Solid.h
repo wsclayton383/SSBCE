@@ -1,6 +1,9 @@
 #pragma once
 #include <graphx.h>
 #include "Animation.h"
+#include "TempSprite.h"
+#include "gfx/gfx.h"
+#include "gfx/chargfx.h"
 
 struct Solid
 {
@@ -11,11 +14,21 @@ struct Solid
 	vector<int> moveY;
 	int speed = 1;
 	int color;
-	Animation anim;
+	//Animation anim;
 	int currentFrame = 0;
 
-	void render()
+	TempSprite* render()
 	{
+		gfx_SetPalette(character_palette, sizeof_character_palette, 0);
+		if (moving)
+		{
+			TempSprite* ts = new TempSprite;
+			ts->init(xpos, ypos, hboxx, hboxy);
+			gfx_SetColor(color);
+			gfx_FillRectangle(xpos, ypos, hboxx, hboxy);
+			return ts;
+		}
+
 		gfx_SetColor(color);
 		gfx_FillRectangle(xpos, ypos, hboxx, hboxy);
 
@@ -23,6 +36,8 @@ struct Solid
 		currentFrame++;
 		if (currentFrame >= (int)anim.frames.size())
 			currentFrame = 0;*/
+
+		return 0;
 	}
 
 	void move()

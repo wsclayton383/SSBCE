@@ -1,13 +1,14 @@
 #pragma once
 #include <graphx.h>
 #include "gfx/gfx.h"
+#include "gfx/chargfx.h"
 
 struct TempSprite
 {
 	int xpos, ypos, width, height;
 	gfx_sprite_t* sprite;
 
-	TempSprite(int x, int y, int w, int h)
+	void init(int x, int y, int w, int h)
 	{
 		xpos = x;
 		ypos = y;

@@ -326,55 +326,44 @@ struct Tetris : public Player
 	
 	int loadSprites()
 	{
-		Animation idleRight;
+		Animation idleRight(15, 22);
 		idleRight.frames.push_back(tetrisright1);
 		
-		Animation idleLeft;
+		Animation idleLeft(15, 22);
 		idleLeft.frames.push_back(tetrisleft1);
 		
-		Animation shield;
+		Animation shield(15, 15, 0, 5);
 		shield.frames.push_back(tetrisshield1);
-		shield.yOffset = 5;
 
-		Animation shieldBroken;
+		Animation shieldBroken(15, 22);
 		shieldBroken.ticksPerFrame = 45;
 		
-		Animation dodgeLeft;
+		Animation dodgeLeft(15, 22);
 		dodgeLeft.frames.push_back(tetrisdodgeleft1);
 		shieldBroken.frames.push_back(tetrisdodgeleft1);
 		
-		Animation dodgeRight;
+		Animation dodgeRight(15, 22);
 		dodgeRight.frames.push_back(tetrisdodgeright1);
 		shieldBroken.frames.push_back(tetrisdodgeright1);
 		
-		Animation neutralLeft;
+		Animation neutralLeft(22, 15, -7, 7);
 		neutralLeft.frames.push_back(tetrisattackneutralleft1);
-		neutralLeft.xOffset = -7;
-		neutralLeft.yOffset = 7;
 		
-		Animation neutralRight;
+		Animation neutralRight(22, 15, 0, 7);
 		neutralRight.frames.push_back(tetrisattackneutralright1);
-		neutralRight.yOffset = 7;
 		
-		Animation smashCharge;
+		Animation smashCharge(8, 29, 3, -7);
 		smashCharge.frames.push_back(tetrisattacksmashcharge1);
-		smashCharge.xOffset = 3;
-		smashCharge.yOffset = -7;
 		
-		Animation smash;
+		Animation smash(29, 8, -7, 14);
 		smash.frames.push_back(tetrisattacksmash1);
-		smash.xOffset = -7;
-		smash.yOffset = 14;
 		
-		Animation special;
+		Animation special(15, 15, 0, 7);
 		special.frames.push_back(tetrisattackspecial1);
-		special.yOffset = 7;
 		
-		Animation recovery;
+		Animation recovery(22, 15, -4, 7);
 		recovery.frames.push_back(tetrisattackrecovery1);
 		recovery.frames.push_back(tetrisattackrecovery2);
-		recovery.xOffset = -4;
-		recovery.yOffset = 7;
 		recovery.ticksPerFrame = 15;
 
 		hboxx = 15;
