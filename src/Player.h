@@ -16,7 +16,7 @@ using namespace tinystl;
 
 enum { idle, shield, shieldbroken, dodge, spotdodge, airdodge, freefall, attackneutral, smashcharge, attacksmash, attackspecial, attackrecovery };
 
-enum { tetris, oiram, fox };
+enum { tetris, oiram, fox, alexis };
 
 struct Player
 {
@@ -101,7 +101,7 @@ struct Player
 				onSemi = false;
 				if (s.solids[i].semiSolid)
 				{
-					if (ypos <= s.solids[i].ypos && ypos + hboxy <= s.solids[i].ypos + s.solids[i].hboxy && yvel > 0)
+					if (ypos <= s.solids[i].ypos && ypos + hboxy <= s.solids[i].ypos + 5 && yvel > 0)
 					{
 						ypos -= (yvel - 1) / 7;
 						yvel = 0;

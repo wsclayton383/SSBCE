@@ -3,7 +3,7 @@
 
 #define chargfx_HEADER_SIZE 0
 
-unsigned char *chargfx_appvar[35] =
+unsigned char *chargfx_appvar[44] =
 {
     (unsigned char*)0,
     (unsigned char*)350,
@@ -40,6 +40,15 @@ unsigned char *chargfx_appvar[35] =
     (unsigned char*)14534,
     (unsigned char*)15112,
     (unsigned char*)15690,
+    (unsigned char*)16268,
+    (unsigned char*)16526,
+    (unsigned char*)16640,
+    (unsigned char*)16742,
+    (unsigned char*)17224,
+    (unsigned char*)18066,
+    (unsigned char*)18548,
+    (unsigned char*)19030,
+    (unsigned char*)19312,
 };
 
 unsigned char chargfx_init(void)
@@ -54,7 +63,7 @@ unsigned char chargfx_init(void)
     }
 
     data = (unsigned int)ti_GetDataPtr(appvar) - (unsigned int)chargfx_appvar[0] + chargfx_HEADER_SIZE;
-    for (i = 0; i < 35; i++)
+    for (i = 0; i < 44; i++)
     {
         chargfx_appvar[i] += data;
     }

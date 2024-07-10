@@ -24,7 +24,7 @@ struct Stage
 		for (int i = 0; i < (int)solids.size(); i++)
 		{
 			//if (solids[i].anim.frames.size())
-			if (!solids[i].moving)
+			if (!(solids[i].moving || solids[i].temp))
 				solids[i].render();
 		}
 	}
@@ -40,10 +40,17 @@ struct Stage
 	}
 	void update()
 	{
-		for (int i = 0; i < (int)solids.size(); i++)
+		for (int i = (int)solids.size() - 1; i >= 0; i--)
 		{
 			if (solids[i].moving)
 				solids[i].move();
+			if (solids[i].temp)
+			{
+				if (solids[i].duration <= 0)
+					solids.erase(&solids[i]);
+				else
+					solids[i].duration--;
+			}
 		}
 	}
 };

@@ -32,7 +32,7 @@ Clear: Exit.
 
 y=/window (debug): Enables/disables fps and frameskip display, and shows hitboxes.
 
-+,- (debug):	Add,subtract damage from P1.
++,- (debug):	Add, subtract damage from P1.
 
 
 Debug controls require debug mode to be enabled in the options menu.

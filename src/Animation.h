@@ -14,6 +14,8 @@ struct Animation
 	int width, height;
 	char* name;
 
+	Animation() {};
+
 	Animation(int w, int h, int x = 0, int y = 0)
 	{
 		width = w;

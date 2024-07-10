@@ -61,6 +61,7 @@ converts:
       - tetris/alt0/*
       - oiram/alt0/*
       - fox/alt0/*
+      - alexis/alt0/*
 
 outputs:
   - type: c

@@ -3,7 +3,7 @@
  * Program Name: Super Smash Bros. CE
  * Author: William Clayton
  * License: idk man, half this code was stolen anyway
- * Description: Super Smash Bros. for the TI-84+ CE
+ * Description: Super Smash Bros. clone for the TI-84+ CE
  *--------------------------------------
 */
 
@@ -81,9 +81,11 @@ int main()
     bTemp.push_back(Button(9, 10, "Tetronimo", 1, stageSelect));
     bTemp.push_back(Button(9, 21, "Oiram", 1, stageSelect));
     bTemp.push_back(Button(9, 32, "Fox", 1, stageSelect));
+    bTemp.push_back(Button(9, 43, "Alexis", 1, stageSelect));
     bTemp.push_back(Button(115, 10, "Tetronimo", 2, -1));
     bTemp.push_back(Button(115, 21, "Oiram", 2, -1));
     bTemp.push_back(Button(115, 32, "Fox", 2, -1));
+    bTemp.push_back(Button(115, 43, "Alexis", 2, -1));
     mList.push_back(Menu("Character Select", charSelect, bTemp));
     bTemp.clear();
     bTemp.push_back(Button(9, 10, "Final Destination", 1, fight));

@@ -7,6 +7,7 @@
 #include "Tetris.h"
 #include "Oiram.h"
 #include "Fox.h"
+#include "Alexis.h"
 #include "Projectile.h"
 #include "Hitbox.h"
 #include "Animation.h"
@@ -179,20 +180,20 @@ void battle()
 	default:
 	case 0:
 		s.bgColor = 93;
-		s.solids.push_back(Solid(80, 135, 160, 26, 16));
-		s.solids.push_back(Solid(100, 161, 120, 26, 16));
+		s.solids.push_back(Solid(80, 135, 160, 26, 16, false));
+		s.solids.push_back(Solid(100, 161, 120, 26, 16, false));
 		break;
 	case 1:
 		s.bgColor = 93;
-		s.solids.push_back(Solid(80, 135, 160, 26, 34));
-		s.solids.push_back(Solid(100, 161, 120, 26, 34));
+		s.solids.push_back(Solid(80, 135, 160, 26, 34, false));
+		s.solids.push_back(Solid(100, 161, 120, 26, 34, false));
 		s.solids.push_back(Solid(100, 104, 40, 5, 17, true));
 		s.solids.push_back(Solid(140, 73, 40, 5, 17, true));
 		s.solids.push_back(Solid(180, 104, 40, 5, 17, true));
 		break;
 	case 2:
 		s.bgColor = 174;
-		s.solids.push_back(Solid(80, 140, 160, 13, 33));
+		s.solids.push_back(Solid(80, 140, 160, 13, 33, false));
 		s.solids.push_back(Solid(40, 110, 40, 5, 33, true, true));
 		s.solids[1].moveX.push_back(40);
 		s.solids[1].moveX.push_back(120);
@@ -207,8 +208,8 @@ void battle()
 	case 3:
 		s.bgColor = 174;
 		s.solids.push_back(Solid(64, 110, 192, 5, 33, true));
-		s.solids.push_back(Solid(64, 190, 75, 13, 33));
-		s.solids.push_back(Solid(181, 190, 75, 13, 33));
+		s.solids.push_back(Solid(64, 190, 75, 13, 33, false));
+		s.solids.push_back(Solid(181, 190, 75, 13, 33, false));
 		s.solids.push_back(Solid(22, 150, 42, 5, 33, true, true));
 		s.solids[3].moveX.push_back(22);
 		s.solids[3].moveX.push_back(97);
@@ -258,6 +259,12 @@ void battle()
 		players.push_back(p1);
 		break;
 	}
+	case alexis:
+	{
+		Alexis* p1 = new Alexis;
+		players.push_back(p1);
+		break;
+	}
 	}
 	switch (mList[charSelect].p2Selection)
 	{
@@ -277,6 +284,12 @@ void battle()
 	case fox:
 	{
 		Fox* p2 = new Fox;
+		players.push_back(p2);
+		break;
+	}
+	case alexis:
+	{
+		Alexis* p2 = new Alexis;
 		players.push_back(p2);
 		break;
 	}
@@ -329,7 +342,6 @@ void battle()
 	int tps = 0;
 	int targetTPS = 60;
 	bool debug = false;
-	int t = 0;
 	timer_Enable(1, TIMER_32K, TIMER_NOINT, TIMER_UP);
 	timer_Enable(2, TIMER_32K, TIMER_NOINT, TIMER_UP);
 	gfx_SetTextXY(10, 10);
@@ -365,8 +377,7 @@ void battle()
 				gfx_SetPalette(character_palette, sizeof_character_palette, 0);
 				for (int i = 0; i < (int)s.solids.size(); i++)
 				{
-					//if (solids[i].anim.frames.size())
-					if (s.solids[i].moving)
+					if (s.solids[i].moving || s.solids[i].temp)
 						s.tSprites[1].push_back(s.solids[i].render());
 				}
 				players[0]->render();
@@ -386,7 +397,7 @@ void battle()
 					gfx_SetTextXY(50, 10);
 					gfx_PrintInt(frameSkip, 1);
 					gfx_SetTextXY(70, 10);
-					gfx_PrintInt(t, 1);
+					gfx_PrintInt(s.solids.size(), 1);
 					gfx_SetColor(5);
 					for (int i = 0; i < (int)s.hboxes.size(); i++)
 					{
@@ -397,8 +408,6 @@ void battle()
 					}
 				}
 				gfx_SwapDraw();
-				if (timer_Get(2) > t)
-					t = timer_Get(2);
 			}
 			else
 				frame = 0;

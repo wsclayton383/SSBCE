@@ -142,8 +142,44 @@ extern "C" {
 #define foxsmashright3_height 24
 #define chargfx_characters_foxsmashright3_index 34
 #define foxsmashright3 ((gfx_sprite_t*)chargfx_appvar[34])
-#define chargfx_entries_num 35
-extern unsigned char *chargfx_appvar[35];
+#define alexisblock1_width 16
+#define alexisblock1_height 16
+#define chargfx_characters_alexisblock1_index 35
+#define alexisblock1 ((gfx_sprite_t*)chargfx_appvar[35])
+#define alexisdaggerright1_width 14
+#define alexisdaggerright1_height 8
+#define chargfx_characters_alexisdaggerright1_index 36
+#define alexisdaggerright1 ((gfx_sprite_t*)chargfx_appvar[36])
+#define alexisholywater1_width 10
+#define alexisholywater1_height 10
+#define chargfx_characters_alexisholywater1_index 37
+#define alexisholywater1 ((gfx_sprite_t*)chargfx_appvar[37])
+#define alexisneutralright1_width 16
+#define alexisneutralright1_height 30
+#define chargfx_characters_alexisneutralright1_index 38
+#define alexisneutralright1 ((gfx_sprite_t*)chargfx_appvar[38])
+#define alexisrecoveryright1_width 28
+#define alexisrecoveryright1_height 30
+#define chargfx_characters_alexisrecoveryright1_index 39
+#define alexisrecoveryright1 ((gfx_sprite_t*)chargfx_appvar[39])
+#define alexisright1_width 16
+#define alexisright1_height 30
+#define chargfx_characters_alexisright1_index 40
+#define alexisright1 ((gfx_sprite_t*)chargfx_appvar[40])
+#define alexisright2_width 16
+#define alexisright2_height 30
+#define chargfx_characters_alexisright2_index 41
+#define alexisright2 ((gfx_sprite_t*)chargfx_appvar[41])
+#define alexiswhipright1_width 14
+#define alexiswhipright1_height 20
+#define chargfx_characters_alexiswhipright1_index 42
+#define alexiswhipright1 ((gfx_sprite_t*)chargfx_appvar[42])
+#define alexiswhipright2_width 32
+#define alexiswhipright2_height 20
+#define chargfx_characters_alexiswhipright2_index 43
+#define alexiswhipright2 ((gfx_sprite_t*)chargfx_appvar[43])
+#define chargfx_entries_num 44
+extern unsigned char *chargfx_appvar[44];
 unsigned char chargfx_init(void);
 
 #ifdef __cplusplus
