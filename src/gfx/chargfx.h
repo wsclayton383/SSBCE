@@ -175,7 +175,7 @@ extern "C" {
 #define chargfx_characters_alexiswhipright1_index 42
 #define alexiswhipright1 ((gfx_sprite_t*)chargfx_appvar[42])
 #define alexiswhipright2_width 32
-#define alexiswhipright2_height 20
+#define alexiswhipright2_height 4
 #define chargfx_characters_alexiswhipright2_index 43
 #define alexiswhipright2 ((gfx_sprite_t*)chargfx_appvar[43])
 #define chargfx_entries_num 44

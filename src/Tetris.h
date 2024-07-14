@@ -303,9 +303,11 @@ struct Tetris : public Player
 			jumps = maxJumps - 1;
 			damage = 0;
 			shieldDamage = 0;
-			currentFrame = 0;
 			state = idle;
 			facingLeft = (team == 2);
+			currentAnim = 5 + facingLeft;
+			currentFrame = 0;
+			d.active = false;
 			intangible = true;
 		}
 		damage *= damage > 0;

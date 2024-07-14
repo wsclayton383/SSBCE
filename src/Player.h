@@ -2,6 +2,7 @@
 #include <graphx.h>
 #include "Animation.h"
 #include "Projectile.h"
+#include "Disjoint.h"
 #include "Hitbox.h"
 #include "Stage.h"
 #include "Solid.h"
@@ -44,7 +45,9 @@ struct Player
 	char* name;
 	gfx_sprite_t* blast;
 	vector<Animation> anims;
+	vector<Projectile*> projs;
 	Hitbox h, tempH;
+	Disjoint d;
 
 	virtual int loadSprites() {};
 
@@ -90,6 +93,7 @@ struct Player
 					lagTimer = s.hboxes[i].hitStun * (1 + damage / 800.0);
 					iFrames = s.hboxes[i].iFrames;
 					state = idle;
+					d.active = false;
 				}
 			}
 		}
@@ -179,6 +183,16 @@ struct Player
 			s.tSprites[1].push_back(ts);
 			gfx_SetColor(team);
 			gfx_FillCircle_NoClip(xpos + hboxx / 2 - anims[2].xOffset, ypos + hboxy / 2, 5 - shieldDamage / 60 + (hboxx - anims[2].xOffset) / 2);
+		}
+
+		if (d.active)
+		{
+			gfx_SetPalette(character_palette, sizeof_character_palette, 0);
+			d.currentFrame *= (d.currentFrame < d.anims[d.currentAnim].ticksPerFrame * (int)d.anims[d.currentAnim].frames.size());
+			TempSprite* ts = new TempSprite;
+			ts->init(xpos + d.anims[d.currentAnim].xOffset, ypos + d.anims[d.currentAnim].yOffset, d.anims[d.currentAnim].width, d.anims[d.currentAnim].height);
+			s.tSprites[1].push_back(ts);
+			gfx_TransparentSprite(d.anims[d.currentAnim].frames[d.currentFrame / d.anims[d.currentAnim].ticksPerFrame], xpos + d.anims[d.currentAnim].xOffset, ypos + d.anims[d.currentAnim].yOffset);
 		}
 
 		renderProjs();

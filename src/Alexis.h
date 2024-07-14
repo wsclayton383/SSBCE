@@ -2,10 +2,11 @@
 #include "Player.h"
 #include "Stage.h"
 #include "Solid.h"
+#include "AlexisDagger.h"
 
 struct Alexis : public Player
 {
-	vector<Projectile> projs;
+	AlexisDagger* dagger;
 	Solid block = Solid(true, 16, 16, 180, true);
 	int blockTimer = 0;
 
@@ -70,8 +71,9 @@ struct Alexis : public Player
 						currentAnim = 7 - facingLeft;
 						currentFrame = 0;
 						xvel *= airborne;
-						moveTimer = 15;
+						moveTimer = 40;
 						lagTimer = 10;
+						d.currentAnim = facingLeft;
 					}
 				}
 				else if (keyB && releasedTime[1])
@@ -92,9 +94,14 @@ struct Alexis : public Player
 					}
 					else
 					{
-						state = attackspecial;
-						currentAnim = 10;
-						lagTimer = 10;
+						if (!projs.size())
+						{
+							state = attackspecial;
+							currentAnim = 10;
+							currentFrame = 99999 * facingLeft;
+							moveTimer = 15;
+							lagTimer = 10;
+						}
 					}
 				}
 				else if (keyG)
@@ -196,24 +203,53 @@ struct Alexis : public Player
 			}
 			break;
 		case attackneutral:
+			d.active = true;
+			moveTimer--;
+			if (moveTimer <= 0)
+			{
+				d.active = false;
+				moveTimer = 0;
+				state = idle;
+			}
+			else if (moveTimer == 20)
+			{
+				currentAnim = facingLeft;
+				d.currentAnim = 2 + facingLeft;
+			}
+			else if (moveTimer < 20)
+			{
+				currentFrame = 0;
+				h.damage = 80;
+				h.knockback = 9;
+				h.x1 = xpos + 16 * !facingLeft - 32 * facingLeft;
+				h.x2 = 32;
+				h.y1 = ypos + 8;
+				h.y2 = 4;
+				h.team = team;
+				h.iFrames = moveTimer;
+				h.hitStun = moveTimer;
+				h.xKnockback = !facingLeft * 4 - 2;
+				h.yKnockback = -1;
+				s.hboxes.push_back(h);
+			}
+			break;
+		case attackspecial:
 			moveTimer--;
 			if (moveTimer <= 0)
 			{
 				moveTimer = 0;
 				state = idle;
+				currentAnim = facingLeft;
+				currentFrame = 0;
+				dagger->duration = 60;
+				dagger->team = team;
+				dagger->xpos = xpos;
+				dagger->ypos = ypos + 4;
+				dagger->xvel = 21 * (2 * !facingLeft - 1);
+				dagger->yvel = 0;
+				dagger->currentAnim = facingLeft;
+				projs.push_back(dagger);
 			}
-			h.damage = 80;
-			h.knockback = 9;
-			h.x1 = xpos + 13 * !facingLeft - 8 * facingLeft;
-			h.x2 = 11;
-			h.y1 = ypos + 14;
-			h.y2 = 4;
-			h.team = team;
-			h.iFrames = moveTimer;
-			h.hitStun = moveTimer;
-			h.xKnockback = !facingLeft * 4 - 2;
-			h.yKnockback = -1;
-			s.hboxes.push_back(h);
 			break;
 		case smashcharge:
 			moveTimer--;
@@ -224,7 +260,6 @@ struct Alexis : public Player
 				state = attacksmash;
 				currentAnim = 9;
 				currentFrame = 99999 * facingLeft;
-
 			}
 			break;
 		case attacksmash:
@@ -234,6 +269,7 @@ struct Alexis : public Player
 				moveTimer = 0;
 				state = idle;
 			}
+
 			break;
 		case attackrecovery:
 			moveTimer--;
@@ -250,7 +286,7 @@ struct Alexis : public Player
 
 		xpos += xvel / 7;
 		ypos += yvel / 7;
-		if (state != attackneutral)
+		if (state != attackneutral || !airborne)
 			xvel *= 0.9 - 0.1 * !airborne;
 		yvel++;
 		airborne = true;
@@ -265,9 +301,11 @@ struct Alexis : public Player
 			jumps = maxJumps - 1;
 			damage = 0;
 			shieldDamage = 0;
-			currentFrame = 0;
 			state = idle;
 			facingLeft = (team == 2);
+			currentAnim = 5 + facingLeft;
+			currentFrame = 0;
+			d.active = false;
 			intangible = true;
 		}
 		damage *= damage > 0;
@@ -277,8 +315,6 @@ struct Alexis : public Player
 		if (state == idle && abs(xvel) < 7)
 			currentFrame = 0;
 		currentFrame++;
-		if (state == idle && abs(xvel) >= 7 && currentFrame >= 45)
-			currentFrame = 15;
 
 		bool keys[9] = { keyA, keyB, keyG, keyJ, keyS, keyDown, keyLeft, keyRight, keyUp };
 		for (int i = 0; i < 9; i++)
@@ -291,8 +327,8 @@ struct Alexis : public Player
 
 		for (int i = 0; i < (int)projs.size(); i++)
 		{
-			projs[i].update();
-			if (projs[i].duration <= 0)
+			projs[i]->update();
+			if (projs[i]->duration <= 0)
 			{
 				for (int j = i; j < (int)projs.size() - 1; j++)
 					projs[j] = projs[j + 1];
@@ -345,8 +381,9 @@ struct Alexis : public Player
 		smash.ticksPerFrame = 99999;
 
 		Animation special(16, 30);
-		special.frames.push_back(alexisright2);
-		special.frames.push_back(idleLeft.frames[1]);
+		special.frames.push_back(alexisneutralright1);
+		special.frames.push_back(shield.frames[1]);
+		special.ticksPerFrame = 99999;
 
 		Animation recovery(28, 30, -6);
 		recovery.frames.push_back(alexisrecoveryright1);
@@ -369,6 +406,26 @@ struct Alexis : public Player
 		anims.push_back(special);
 		anims.push_back(recovery);
 
+		Animation whipright1(14, 20, -14, 6);
+		whipright1.frames.push_back(alexiswhipright1);
+
+		Animation whipleft1(14, 20, 16, 6);
+		whipleft1.frames.push_back(gfx_FlipSpriteY(alexiswhipright1, gfx_MallocSprite(14, 20)));
+
+		Animation whipright2(32, 4, 16, 8);
+		whipright2.frames.push_back(alexiswhipright2);
+
+		Animation whipleft2(32, 4, -32, 8);
+		whipleft2.frames.push_back(gfx_FlipSpriteY(alexiswhipright2, gfx_MallocSprite(32, 4)));
+
+		d.anims.push_back(whipright1);
+		d.anims.push_back(whipleft1);
+		d.anims.push_back(whipright2);
+		d.anims.push_back(whipleft2);
+
+		dagger = new AlexisDagger;
+		dagger->loadSprites();
+
 		block.anim.frames.push_back(alexisblock1);
 
 		return 0;
@@ -382,6 +439,11 @@ struct Alexis : public Player
 	void renderProjs()
 	{
 		for (int i = 0; i < (int)projs.size(); i++)
-			projs[i].render();
+			projs[i]->render();
+	}
+
+	~Alexis()
+	{
+		delete dagger;
 	}
 };

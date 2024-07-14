@@ -397,7 +397,7 @@ void battle()
 					gfx_SetTextXY(50, 10);
 					gfx_PrintInt(frameSkip, 1);
 					gfx_SetTextXY(70, 10);
-					gfx_PrintInt(s.solids.size(), 1);
+					gfx_PrintInt(players[0]->projs.size(), 1);
 					gfx_SetColor(5);
 					for (int i = 0; i < (int)s.hboxes.size(); i++)
 					{

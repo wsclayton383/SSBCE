@@ -85,5 +85,6 @@ struct Solid
 		hboxy = hy;
 		duration = d;
 		semiSolid = sS;
+		moving = false;
 	}
 };
